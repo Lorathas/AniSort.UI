@@ -37,7 +37,7 @@ dependencies:
   protobuf: 2.1.0
   grpc: 3.0.2
   path_provider: 2.0.11
-  path: 1.8.1
+  path: ^1.8.2
   get_it: 7.2.0
   injectable: ^1.5.3
 
