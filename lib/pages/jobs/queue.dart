@@ -9,7 +9,12 @@ class QueuePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Job Queue')),
-      body: JobQueue()
+      body: Column(
+        children: [
+          const Text('Job Queue'),
+          JobQueue()
+        ],
+      )
     );
   }
 }
