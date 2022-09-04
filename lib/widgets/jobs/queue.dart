@@ -25,7 +25,7 @@ class _JobQueueState extends State<JobQueue> {
 
   String? _name;
   JobType? _type;
-  FilterDirection _sort = FilterDirection.Descending;
+  SortDirection _sort = SortDirection.Descending;
   JobFilterSortBy _sortBy = JobFilterSortBy.QueuedAt;
 
   Future<List<JobReply>> _loadJobs() async {

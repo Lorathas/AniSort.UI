@@ -53,7 +53,7 @@ class JobFilter extends StatelessWidget {
                         decoration: const InputDecoration(border: UnderlineInputBorder(), labelText: 'Type'),
                         value: type,
                         onChanged: (value) => onTypeChange!(value),
-                        items: [null, JobType.Hash, JobType.Sort, JobType.Defragment]
+                        items: [null, JobType.HashFile, JobType.HashDirectory, JobType.SortFile, JobType.SortDirectory, JobType.Defragment]
                             .map((val) => DropdownMenuItem<JobType?>(value: val, child: Text(val?.toString() ?? 'None')))
                             .toList()))),
             Expanded(
