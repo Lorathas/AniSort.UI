@@ -1,4 +1,5 @@
 import 'package:anisort_ui/ioc.dart';
+import 'package:anisort_ui/pages/jobs/queue.dart';
 import 'package:anisort_ui/theme/swatches.dart';
 import 'package:anisort_ui/widgets/jobs/queue.dart';
 import 'package:flutter/material.dart';
@@ -30,18 +31,14 @@ class AniSort extends StatelessWidget {
         primarySwatch: slate,
         canvasColor: slate.shade50,
         backgroundColor: slate.shade400,
-        appBarTheme: AppBarTheme(
-            backgroundColor: slate.shade900
-        ),
+        appBarTheme: AppBarTheme(backgroundColor: slate.shade900),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: slate,
         canvasColor: slate.shade900,
         backgroundColor: slate.shade700,
-        appBarTheme: AppBarTheme(
-          backgroundColor: slate.shade800
-        ),
+        appBarTheme: AppBarTheme(backgroundColor: slate.shade800),
       ),
       themeMode: ThemeMode.system,
       home: const AniSortHomePage(title: 'AniSort'),
@@ -76,12 +73,6 @@ class _AniSortHomePageState extends State<AniSortHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-        appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
-        ),
-        body: Container(margin: const EdgeInsets.all(4), child: JobQueue()));
+    return const JobQueuePage();
   }
 }

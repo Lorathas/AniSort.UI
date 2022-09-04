@@ -52,13 +52,17 @@ class JobUpdate extends $pb.ProtobufEnum {
 }
 
 class JobType extends $pb.ProtobufEnum {
-  static const JobType Sort = JobType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sort');
-  static const JobType Hash = JobType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Hash');
-  static const JobType Defragment = JobType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Defragment');
+  static const JobType SortFile = JobType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SortFile');
+  static const JobType SortDirectory = JobType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SortDirectory');
+  static const JobType HashFile = JobType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'HashFile');
+  static const JobType HashDirectory = JobType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'HashDirectory');
+  static const JobType Defragment = JobType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Defragment');
 
   static const $core.List<JobType> values = <JobType> [
-    Sort,
-    Hash,
+    SortFile,
+    SortDirectory,
+    HashFile,
+    HashDirectory,
     Defragment,
   ];
 

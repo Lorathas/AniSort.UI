@@ -9,16 +9,16 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'google/protobuf/struct.pb.dart' as $2;
-import 'google/protobuf/timestamp.pb.dart' as $3;
+import 'google/protobuf/struct.pb.dart' as $8;
+import 'google/protobuf/timestamp.pb.dart' as $6;
 
 class JobLog extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'JobLog', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'anisort'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'jobLogId', protoName: 'jobLogId')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'jobId', protoName: 'jobId')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'message')
-    ..aOM<$2.Struct>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'params', subBuilder: $2.Struct.create)
-    ..aOM<$3.Timestamp>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt', protoName: 'createdAt', subBuilder: $3.Timestamp.create)
+    ..aOM<$8.Struct>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'params', subBuilder: $8.Struct.create)
+    ..aOM<$6.Timestamp>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt', protoName: 'createdAt', subBuilder: $6.Timestamp.create)
     ..hasRequiredFields = false
   ;
 
@@ -27,8 +27,8 @@ class JobLog extends $pb.GeneratedMessage {
     $core.String? jobLogId,
     $core.String? jobId,
     $core.String? message,
-    $2.Struct? params,
-    $3.Timestamp? createdAt,
+    $8.Struct? params,
+    $6.Timestamp? createdAt,
   }) {
     final _result = create();
     if (jobLogId != null) {
@@ -97,26 +97,26 @@ class JobLog extends $pb.GeneratedMessage {
   void clearMessage() => clearField(3);
 
   @$pb.TagNumber(4)
-  $2.Struct get params => $_getN(3);
+  $8.Struct get params => $_getN(3);
   @$pb.TagNumber(4)
-  set params($2.Struct v) { setField(4, v); }
+  set params($8.Struct v) { setField(4, v); }
   @$pb.TagNumber(4)
   $core.bool hasParams() => $_has(3);
   @$pb.TagNumber(4)
   void clearParams() => clearField(4);
   @$pb.TagNumber(4)
-  $2.Struct ensureParams() => $_ensure(3);
+  $8.Struct ensureParams() => $_ensure(3);
 
   @$pb.TagNumber(5)
-  $3.Timestamp get createdAt => $_getN(4);
+  $6.Timestamp get createdAt => $_getN(4);
   @$pb.TagNumber(5)
-  set createdAt($3.Timestamp v) { setField(5, v); }
+  set createdAt($6.Timestamp v) { setField(5, v); }
   @$pb.TagNumber(5)
   $core.bool hasCreatedAt() => $_has(4);
   @$pb.TagNumber(5)
   void clearCreatedAt() => clearField(5);
   @$pb.TagNumber(5)
-  $3.Timestamp ensureCreatedAt() => $_ensure(4);
+  $6.Timestamp ensureCreatedAt() => $_ensure(4);
 }
 
 class StepLog extends $pb.GeneratedMessage {
@@ -124,8 +124,8 @@ class StepLog extends $pb.GeneratedMessage {
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stepLogId', protoName: 'stepLogId')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stepId', protoName: 'stepId')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'message')
-    ..aOM<$2.Struct>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'params', subBuilder: $2.Struct.create)
-    ..aOM<$3.Timestamp>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt', protoName: 'createdAt', subBuilder: $3.Timestamp.create)
+    ..aOM<$8.Struct>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'params', subBuilder: $8.Struct.create)
+    ..aOM<$6.Timestamp>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt', protoName: 'createdAt', subBuilder: $6.Timestamp.create)
     ..hasRequiredFields = false
   ;
 
@@ -134,8 +134,8 @@ class StepLog extends $pb.GeneratedMessage {
     $core.String? stepLogId,
     $core.String? stepId,
     $core.String? message,
-    $2.Struct? params,
-    $3.Timestamp? createdAt,
+    $8.Struct? params,
+    $6.Timestamp? createdAt,
   }) {
     final _result = create();
     if (stepLogId != null) {
@@ -204,25 +204,25 @@ class StepLog extends $pb.GeneratedMessage {
   void clearMessage() => clearField(3);
 
   @$pb.TagNumber(4)
-  $2.Struct get params => $_getN(3);
+  $8.Struct get params => $_getN(3);
   @$pb.TagNumber(4)
-  set params($2.Struct v) { setField(4, v); }
+  set params($8.Struct v) { setField(4, v); }
   @$pb.TagNumber(4)
   $core.bool hasParams() => $_has(3);
   @$pb.TagNumber(4)
   void clearParams() => clearField(4);
   @$pb.TagNumber(4)
-  $2.Struct ensureParams() => $_ensure(3);
+  $8.Struct ensureParams() => $_ensure(3);
 
   @$pb.TagNumber(5)
-  $3.Timestamp get createdAt => $_getN(4);
+  $6.Timestamp get createdAt => $_getN(4);
   @$pb.TagNumber(5)
-  set createdAt($3.Timestamp v) { setField(5, v); }
+  set createdAt($6.Timestamp v) { setField(5, v); }
   @$pb.TagNumber(5)
   $core.bool hasCreatedAt() => $_has(4);
   @$pb.TagNumber(5)
   void clearCreatedAt() => clearField(5);
   @$pb.TagNumber(5)
-  $3.Timestamp ensureCreatedAt() => $_ensure(4);
+  $6.Timestamp ensureCreatedAt() => $_ensure(4);
 }
 

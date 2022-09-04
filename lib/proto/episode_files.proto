@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "AniSort.Server";
+
+package anisort;
+
+message EpisodeFileReply {
+  
+}

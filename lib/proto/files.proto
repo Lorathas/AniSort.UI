@@ -1,0 +1,139 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "common.proto";
+import "episode_files.proto";
+
+option csharp_namespace = "AniSort.Server";
+
+package anisort.files;
+
+service LocalFileService {
+  rpc ListFiles(FilteredLocalFilesRequest) returns (stream LocalFileReply);
+  
+  rpc ListenForFileUpdates(LocalFileRequest) returns (stream LocalFileUpdateReply);
+  
+  rpc ListenForAllFileUpdates(FilteredLocalFilesRequest) returns (stream LocalFileUpdateReply);
+
+  rpc GetFileDetails(LocalFileRequest) returns (LocalFileReply);
+
+  rpc GetPageInfo(FilteredLocalFilesRequest) returns (PagesInfo);
+  
+  rpc GetDrives(Empty) returns (DrivesReply);
+  
+  rpc GetFilesInDirectory(stream DirectoryFilesRequest) returns (stream DirectoryFilesReply);
+}
+
+//region Base Data Types
+
+message LocalFileReply {
+  optional string localFileId = 1;
+  optional int32 episodeFileId = 2;
+  optional EpisodeFileReply episodeFile = 12;
+  string path = 3;
+  optional bytes ed2kHash = 4;
+  optional bytes md5Hash = 5;
+  optional bytes sha3_512Hash = 6;
+  int64 fileLength = 7;
+  repeated FileActionReply fileActions = 8;
+  ImportStatus status = 9;
+  google.protobuf.Timestamp createdAt = 10;
+  google.protobuf.Timestamp updatedAt = 11;
+}
+
+message LocalFileUpdateReply {
+  HubUpdate updateType = 13;
+  optional string localFileId = 1;
+  optional int32 episodeFileId = 2;
+  optional EpisodeFileReply episodeFile = 12;
+  string path = 3;
+  optional bytes ed2kHash = 4;
+  optional bytes md5Hash = 5;
+  optional bytes sha3_512Hash = 6;
+  int64 fileLength = 7;
+  repeated FileActionReply fileActions = 8;
+  ImportStatus status = 9;
+  google.protobuf.Timestamp createdAt = 10;
+  google.protobuf.Timestamp updatedAt = 11;
+}
+
+enum ImportStatus {
+  NotYetImported = 0;
+  Imported = 1;
+  Error = 2;
+  NoFileFound = 3;
+  ImportedMissingData = 4;
+  Hashed = 5;
+}
+
+message FileActionReply {
+  string fileActionId = 1;
+  FileActionType type = 2;
+  bool success = 3;
+  string info = 4;
+  optional string exception = 5;
+  optional string localFileId = 6;
+  optional LocalFileReply localFile = 7;
+  google.protobuf.Timestamp createdAt = 8;
+  google.protobuf.Timestamp updatedAt = 9;
+}
+
+enum FileActionType {
+  Hash = 0;
+  Search = 1;
+  Copy = 2;
+  Move = 3;
+  Delete = 4;
+  Copied = 5;
+}
+
+//endregion
+
+//region Request Types
+
+message FilteredLocalFilesRequest {
+  int32 page = 1;
+  optional string search = 2;
+  optional google.protobuf.Timestamp startTime = 3;
+  optional google.protobuf.Timestamp endTime = 4;
+  optional ImportStatus status = 5;
+  optional SortDirection sort = 6;
+  optional LocalFileSortBy sortBy = 7;
+}
+
+enum LocalFileSortBy {
+  Path = 0;
+  Length = 1;
+  SortByHash = 2;
+  Status = 3;
+  CreatedAt = 4;
+  UpdatedAt = 5;
+}
+
+message LocalFileRequest {
+  string localFileId = 1;
+}
+
+message DrivesReply {
+  repeated string drives = 1;
+}
+
+message DirectoryFilesRequest {
+  string path = 1;
+}
+
+message DirectoryFilesReply {
+  repeated DirectoryFile files = 1;
+  
+  enum DirectoryFileType {
+    File = 0;
+    Directory = 1;
+  }
+  
+  message DirectoryFile {
+    DirectoryFileType type = 1;
+    string name = 2;
+  }
+}
+
+//endregion

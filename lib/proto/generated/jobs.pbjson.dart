@@ -40,14 +40,16 @@ final $typed_data.Uint8List jobUpdateDescriptor = $convert.base64Decode('CglKb2J
 const JobType$json = const {
   '1': 'JobType',
   '2': const [
-    const {'1': 'Sort', '2': 0},
-    const {'1': 'Hash', '2': 1},
-    const {'1': 'Defragment', '2': 2},
+    const {'1': 'SortFile', '2': 0},
+    const {'1': 'SortDirectory', '2': 1},
+    const {'1': 'HashFile', '2': 2},
+    const {'1': 'HashDirectory', '2': 3},
+    const {'1': 'Defragment', '2': 4},
   ],
 };
 
 /// Descriptor for `JobType`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List jobTypeDescriptor = $convert.base64Decode('CgdKb2JUeXBlEggKBFNvcnQQABIICgRIYXNoEAESDgoKRGVmcmFnbWVudBAC');
+final $typed_data.Uint8List jobTypeDescriptor = $convert.base64Decode('CgdKb2JUeXBlEgwKCFNvcnRGaWxlEAASEQoNU29ydERpcmVjdG9yeRABEgwKCEhhc2hGaWxlEAISEQoNSGFzaERpcmVjdG9yeRADEg4KCkRlZnJhZ21lbnQQBA==');
 @$core.Deprecated('Use jobFilterSortByDescriptor instead')
 const JobFilterSortBy$json = const {
   '1': 'JobFilterSortBy',
@@ -119,24 +121,25 @@ const QueueJobRequest$json = const {
   '1': 'QueueJobRequest',
   '2': const [
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'type', '3': 2, '4': 1, '5': 9, '10': 'type'},
+    const {'1': 'type', '3': 2, '4': 1, '5': 14, '6': '.anisort.JobType', '10': 'type'},
     const {'1': 'options', '3': 11, '4': 1, '5': 11, '6': '.google.protobuf.Struct', '10': 'options'},
   ],
 };
 
 /// Descriptor for `QueueJobRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List queueJobRequestDescriptor = $convert.base64Decode('Cg9RdWV1ZUpvYlJlcXVlc3QSEgoEbmFtZRgBIAEoCVIEbmFtZRISCgR0eXBlGAIgASgJUgR0eXBlEjEKB29wdGlvbnMYCyABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0UgdvcHRpb25z');
+final $typed_data.Uint8List queueJobRequestDescriptor = $convert.base64Decode('Cg9RdWV1ZUpvYlJlcXVlc3QSEgoEbmFtZRgBIAEoCVIEbmFtZRIkCgR0eXBlGAIgASgOMhAuYW5pc29ydC5Kb2JUeXBlUgR0eXBlEjEKB29wdGlvbnMYCyABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0UgdvcHRpb25z');
 @$core.Deprecated('Use filteredJobsRequestDescriptor instead')
 const FilteredJobsRequest$json = const {
   '1': 'FilteredJobsRequest',
   '2': const [
-    const {'1': 'status', '3': 1, '4': 1, '5': 14, '6': '.anisort.JobStatus', '9': 0, '10': 'status', '17': true},
-    const {'1': 'name', '3': 2, '4': 1, '5': 9, '9': 1, '10': 'name', '17': true},
-    const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.anisort.JobType', '9': 2, '10': 'type', '17': true},
-    const {'1': 'startTime', '3': 4, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '9': 3, '10': 'startTime', '17': true},
-    const {'1': 'endTime', '3': 5, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '9': 4, '10': 'endTime', '17': true},
-    const {'1': 'sortBy', '3': 6, '4': 1, '5': 14, '6': '.anisort.JobFilterSortBy', '9': 5, '10': 'sortBy', '17': true},
-    const {'1': 'sort', '3': 7, '4': 1, '5': 14, '6': '.anisort.FilterDirection', '9': 6, '10': 'sort', '17': true},
+    const {'1': 'page', '3': 1, '4': 1, '5': 5, '10': 'page'},
+    const {'1': 'status', '3': 2, '4': 1, '5': 14, '6': '.anisort.JobStatus', '9': 0, '10': 'status', '17': true},
+    const {'1': 'name', '3': 3, '4': 1, '5': 9, '9': 1, '10': 'name', '17': true},
+    const {'1': 'type', '3': 4, '4': 1, '5': 14, '6': '.anisort.JobType', '9': 2, '10': 'type', '17': true},
+    const {'1': 'startTime', '3': 5, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '9': 3, '10': 'startTime', '17': true},
+    const {'1': 'endTime', '3': 6, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '9': 4, '10': 'endTime', '17': true},
+    const {'1': 'sortBy', '3': 7, '4': 1, '5': 14, '6': '.anisort.JobFilterSortBy', '9': 5, '10': 'sortBy', '17': true},
+    const {'1': 'sort', '3': 8, '4': 1, '5': 14, '6': '.anisort.SortDirection', '9': 6, '10': 'sort', '17': true},
   ],
   '8': const [
     const {'1': '_status'},
@@ -150,7 +153,7 @@ const FilteredJobsRequest$json = const {
 };
 
 /// Descriptor for `FilteredJobsRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List filteredJobsRequestDescriptor = $convert.base64Decode('ChNGaWx0ZXJlZEpvYnNSZXF1ZXN0Ei8KBnN0YXR1cxgBIAEoDjISLmFuaXNvcnQuSm9iU3RhdHVzSABSBnN0YXR1c4gBARIXCgRuYW1lGAIgASgJSAFSBG5hbWWIAQESKQoEdHlwZRgDIAEoDjIQLmFuaXNvcnQuSm9iVHlwZUgCUgR0eXBliAEBEj0KCXN0YXJ0VGltZRgEIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBIA1IJc3RhcnRUaW1liAEBEjkKB2VuZFRpbWUYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wSARSB2VuZFRpbWWIAQESNQoGc29ydEJ5GAYgASgOMhguYW5pc29ydC5Kb2JGaWx0ZXJTb3J0QnlIBVIGc29ydEJ5iAEBEjEKBHNvcnQYByABKA4yGC5hbmlzb3J0LkZpbHRlckRpcmVjdGlvbkgGUgRzb3J0iAEBQgkKB19zdGF0dXNCBwoFX25hbWVCBwoFX3R5cGVCDAoKX3N0YXJ0VGltZUIKCghfZW5kVGltZUIJCgdfc29ydEJ5QgcKBV9zb3J0');
+final $typed_data.Uint8List filteredJobsRequestDescriptor = $convert.base64Decode('ChNGaWx0ZXJlZEpvYnNSZXF1ZXN0EhIKBHBhZ2UYASABKAVSBHBhZ2USLwoGc3RhdHVzGAIgASgOMhIuYW5pc29ydC5Kb2JTdGF0dXNIAFIGc3RhdHVziAEBEhcKBG5hbWUYAyABKAlIAVIEbmFtZYgBARIpCgR0eXBlGAQgASgOMhAuYW5pc29ydC5Kb2JUeXBlSAJSBHR5cGWIAQESPQoJc3RhcnRUaW1lGAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEgDUglzdGFydFRpbWWIAQESOQoHZW5kVGltZRgGIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBIBFIHZW5kVGltZYgBARI1CgZzb3J0QnkYByABKA4yGC5hbmlzb3J0LkpvYkZpbHRlclNvcnRCeUgFUgZzb3J0QnmIAQESLwoEc29ydBgIIAEoDjIWLmFuaXNvcnQuU29ydERpcmVjdGlvbkgGUgRzb3J0iAEBQgkKB19zdGF0dXNCBwoFX25hbWVCBwoFX3R5cGVCDAoKX3N0YXJ0VGltZUIKCghfZW5kVGltZUIJCgdfc29ydEJ5QgcKBV9zb3J0');
 @$core.Deprecated('Use jobReplyDescriptor instead')
 const JobReply$json = const {
   '1': 'JobReply',
