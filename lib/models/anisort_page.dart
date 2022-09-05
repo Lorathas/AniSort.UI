@@ -6,4 +6,6 @@ enum AniSortPage {
   anime,
   animeDetails,
   settings,
+  scheduledJobs,
+  scheduledJobDetails,
 }

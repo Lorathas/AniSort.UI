@@ -6,6 +6,7 @@ import '../models/anisort_page.dart';
 import '../pages/anime/list.dart';
 import '../pages/files/list.dart';
 import '../pages/jobs/queue.dart';
+import '../pages/scheduled_jobs/list.dart';
 import '../pages/settings.dart';
 import '../theme/swatches.dart';
 
@@ -23,6 +24,7 @@ class NavigationPane extends StatelessWidget {
         child: ListView(
           children: [
             _NavigationPaneItem(title: 'Job Queue', page: AniSortPage.jobQueue, currentPage: currentPage, icon: Icons.queue),
+            _NavigationPaneItem(title: 'Scheduled Jobs', page: AniSortPage.scheduledJobs, currentPage: currentPage, icon: Icons.timer),
             _NavigationPaneItem(title: 'Files', page: AniSortPage.files, currentPage: currentPage, icon: Icons.folder),
             _NavigationPaneItem(title: 'Anime', page: AniSortPage.anime, currentPage: currentPage, icon: Icons.tv),
             _NavigationPaneItem(title: 'Settings', page: AniSortPage.settings, currentPage: currentPage, icon: Icons.settings),
@@ -53,6 +55,9 @@ class _NavigationPaneItem extends StatelessWidget {
         break;
       case AniSortPage.settings:
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsPage()));
+        break;
+      case AniSortPage.scheduledJobs:
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ScheduledJobsPage()));
         break;
     }
   }
