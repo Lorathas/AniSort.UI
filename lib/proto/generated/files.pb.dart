@@ -825,16 +825,21 @@ class DrivesReply extends $pb.GeneratedMessage {
 class DirectoryFilesRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DirectoryFilesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'anisort.files'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'includeDrives', protoName: 'includeDrives')
     ..hasRequiredFields = false
   ;
 
   DirectoryFilesRequest._() : super();
   factory DirectoryFilesRequest({
     $core.String? path,
+    $core.bool? includeDrives,
   }) {
     final _result = create();
     if (path != null) {
       _result.path = path;
+    }
+    if (includeDrives != null) {
+      _result.includeDrives = includeDrives;
     }
     return _result;
   }
@@ -867,12 +872,22 @@ class DirectoryFilesRequest extends $pb.GeneratedMessage {
   $core.bool hasPath() => $_has(0);
   @$pb.TagNumber(1)
   void clearPath() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.bool get includeDrives => $_getBF(1);
+  @$pb.TagNumber(2)
+  set includeDrives($core.bool v) { $_setBool(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasIncludeDrives() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearIncludeDrives() => clearField(2);
 }
 
 class DirectoryFilesReply_DirectoryFile extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DirectoryFilesReply.DirectoryFile', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'anisort.files'), createEmptyInstance: create)
     ..e<DirectoryFilesReply_DirectoryFileType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: DirectoryFilesReply_DirectoryFileType.File, valueOf: DirectoryFilesReply_DirectoryFileType.valueOf, enumValues: DirectoryFilesReply_DirectoryFileType.values)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
     ..hasRequiredFields = false
   ;
 
@@ -880,6 +895,7 @@ class DirectoryFilesReply_DirectoryFile extends $pb.GeneratedMessage {
   factory DirectoryFilesReply_DirectoryFile({
     DirectoryFilesReply_DirectoryFileType? type,
     $core.String? name,
+    $core.String? path,
   }) {
     final _result = create();
     if (type != null) {
@@ -887,6 +903,9 @@ class DirectoryFilesReply_DirectoryFile extends $pb.GeneratedMessage {
     }
     if (name != null) {
       _result.name = name;
+    }
+    if (path != null) {
+      _result.path = path;
     }
     return _result;
   }
@@ -928,21 +947,40 @@ class DirectoryFilesReply_DirectoryFile extends $pb.GeneratedMessage {
   $core.bool hasName() => $_has(1);
   @$pb.TagNumber(2)
   void clearName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get path => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set path($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasPath() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPath() => clearField(3);
 }
 
 class DirectoryFilesReply extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DirectoryFilesReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'anisort.files'), createEmptyInstance: create)
     ..pc<DirectoryFilesReply_DirectoryFile>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'files', $pb.PbFieldType.PM, subBuilder: DirectoryFilesReply_DirectoryFile.create)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentPath', protoName: 'currentPath')
+    ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'drives')
     ..hasRequiredFields = false
   ;
 
   DirectoryFilesReply._() : super();
   factory DirectoryFilesReply({
     $core.Iterable<DirectoryFilesReply_DirectoryFile>? files,
+    $core.String? currentPath,
+    $core.Iterable<$core.String>? drives,
   }) {
     final _result = create();
     if (files != null) {
       _result.files.addAll(files);
+    }
+    if (currentPath != null) {
+      _result.currentPath = currentPath;
+    }
+    if (drives != null) {
+      _result.drives.addAll(drives);
     }
     return _result;
   }
@@ -969,5 +1007,17 @@ class DirectoryFilesReply extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<DirectoryFilesReply_DirectoryFile> get files => $_getList(0);
+
+  @$pb.TagNumber(2)
+  $core.String get currentPath => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set currentPath($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCurrentPath() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCurrentPath() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<$core.String> get drives => $_getList(2);
 }
 

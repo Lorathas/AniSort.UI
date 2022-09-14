@@ -184,16 +184,19 @@ const DirectoryFilesRequest$json = const {
   '1': 'DirectoryFilesRequest',
   '2': const [
     const {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
+    const {'1': 'includeDrives', '3': 2, '4': 1, '5': 8, '10': 'includeDrives'},
   ],
 };
 
 /// Descriptor for `DirectoryFilesRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List directoryFilesRequestDescriptor = $convert.base64Decode('ChVEaXJlY3RvcnlGaWxlc1JlcXVlc3QSEgoEcGF0aBgBIAEoCVIEcGF0aA==');
+final $typed_data.Uint8List directoryFilesRequestDescriptor = $convert.base64Decode('ChVEaXJlY3RvcnlGaWxlc1JlcXVlc3QSEgoEcGF0aBgBIAEoCVIEcGF0aBIkCg1pbmNsdWRlRHJpdmVzGAIgASgIUg1pbmNsdWRlRHJpdmVz');
 @$core.Deprecated('Use directoryFilesReplyDescriptor instead')
 const DirectoryFilesReply$json = const {
   '1': 'DirectoryFilesReply',
   '2': const [
     const {'1': 'files', '3': 1, '4': 3, '5': 11, '6': '.anisort.files.DirectoryFilesReply.DirectoryFile', '10': 'files'},
+    const {'1': 'currentPath', '3': 2, '4': 1, '5': 9, '10': 'currentPath'},
+    const {'1': 'drives', '3': 3, '4': 3, '5': 9, '10': 'drives'},
   ],
   '3': const [DirectoryFilesReply_DirectoryFile$json],
   '4': const [DirectoryFilesReply_DirectoryFileType$json],
@@ -205,6 +208,7 @@ const DirectoryFilesReply_DirectoryFile$json = const {
   '2': const [
     const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.anisort.files.DirectoryFilesReply.DirectoryFileType', '10': 'type'},
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'path', '3': 3, '4': 1, '5': 9, '10': 'path'},
   ],
 };
 
@@ -218,4 +222,4 @@ const DirectoryFilesReply_DirectoryFileType$json = const {
 };
 
 /// Descriptor for `DirectoryFilesReply`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List directoryFilesReplyDescriptor = $convert.base64Decode('ChNEaXJlY3RvcnlGaWxlc1JlcGx5EkYKBWZpbGVzGAEgAygLMjAuYW5pc29ydC5maWxlcy5EaXJlY3RvcnlGaWxlc1JlcGx5LkRpcmVjdG9yeUZpbGVSBWZpbGVzGm0KDURpcmVjdG9yeUZpbGUSSAoEdHlwZRgBIAEoDjI0LmFuaXNvcnQuZmlsZXMuRGlyZWN0b3J5RmlsZXNSZXBseS5EaXJlY3RvcnlGaWxlVHlwZVIEdHlwZRISCgRuYW1lGAIgASgJUgRuYW1lIiwKEURpcmVjdG9yeUZpbGVUeXBlEggKBEZpbGUQABINCglEaXJlY3RvcnkQAQ==');
+final $typed_data.Uint8List directoryFilesReplyDescriptor = $convert.base64Decode('ChNEaXJlY3RvcnlGaWxlc1JlcGx5EkYKBWZpbGVzGAEgAygLMjAuYW5pc29ydC5maWxlcy5EaXJlY3RvcnlGaWxlc1JlcGx5LkRpcmVjdG9yeUZpbGVSBWZpbGVzEiAKC2N1cnJlbnRQYXRoGAIgASgJUgtjdXJyZW50UGF0aBIWCgZkcml2ZXMYAyADKAlSBmRyaXZlcxqBAQoNRGlyZWN0b3J5RmlsZRJICgR0eXBlGAEgASgOMjQuYW5pc29ydC5maWxlcy5EaXJlY3RvcnlGaWxlc1JlcGx5LkRpcmVjdG9yeUZpbGVUeXBlUgR0eXBlEhIKBG5hbWUYAiABKAlSBG5hbWUSEgoEcGF0aBgDIAEoCVIEcGF0aCIsChFEaXJlY3RvcnlGaWxlVHlwZRIICgRGaWxlEAASDQoJRGlyZWN0b3J5EAE=');

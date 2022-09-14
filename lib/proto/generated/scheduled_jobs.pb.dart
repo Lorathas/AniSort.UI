@@ -11,7 +11,7 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'google/protobuf/struct.pb.dart' as $8;
 
-import 'jobs.pbenum.dart' as $3;
+import 'jobs.pbenum.dart' as $4;
 import 'scheduled_jobs.pbenum.dart';
 
 export 'scheduled_jobs.pbenum.dart';
@@ -20,7 +20,7 @@ class ScheduledJob extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ScheduledJob', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'anisort'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scheduledJobId', protoName: 'scheduledJobId')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..e<$3.JobType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: $3.JobType.SortFile, valueOf: $3.JobType.valueOf, enumValues: $3.JobType.values)
+    ..e<$4.JobType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: $4.JobType.SortFile, valueOf: $4.JobType.valueOf, enumValues: $4.JobType.values)
     ..e<ScheduleType>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scheduleType', $pb.PbFieldType.OE, protoName: 'scheduleType', defaultOrMaker: ScheduleType.Timed, valueOf: ScheduleType.valueOf, enumValues: ScheduleType.values)
     ..aOM<$8.Struct>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'options', subBuilder: $8.Struct.create)
     ..aOM<$8.Struct>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scheduleOptions', protoName: 'scheduleOptions', subBuilder: $8.Struct.create)
@@ -31,7 +31,7 @@ class ScheduledJob extends $pb.GeneratedMessage {
   factory ScheduledJob({
     $core.String? scheduledJobId,
     $core.String? name,
-    $3.JobType? type,
+    $4.JobType? type,
     ScheduleType? scheduleType,
     $8.Struct? options,
     $8.Struct? scheduleOptions,
@@ -97,9 +97,9 @@ class ScheduledJob extends $pb.GeneratedMessage {
   void clearName() => clearField(2);
 
   @$pb.TagNumber(3)
-  $3.JobType get type => $_getN(2);
+  $4.JobType get type => $_getN(2);
   @$pb.TagNumber(3)
-  set type($3.JobType v) { setField(3, v); }
+  set type($4.JobType v) { setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasType() => $_has(2);
   @$pb.TagNumber(3)

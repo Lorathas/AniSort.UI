@@ -10,15 +10,15 @@ import 'dart:async' as $async;
 import 'dart:core' as $core;
 
 import 'package:grpc/service_api.dart' as $grpc;
-import 'google/protobuf/empty.pb.dart' as $4;
+import 'google/protobuf/empty.pb.dart' as $3;
 import 'scheduled_jobs.pb.dart' as $5;
 export 'scheduled_jobs.pb.dart';
 
 class ScheduledJobServiceClient extends $grpc.Client {
   static final _$listScheduledJobs =
-      $grpc.ClientMethod<$4.Empty, $5.ScheduledJob>(
+      $grpc.ClientMethod<$3.Empty, $5.ScheduledJob>(
           '/anisort.ScheduledJobService/ListScheduledJobs',
-          ($4.Empty value) => value.writeToBuffer(),
+          ($3.Empty value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $5.ScheduledJob.fromBuffer(value));
   static final _$createScheduledJob =
       $grpc.ClientMethod<$5.ScheduledJob, $5.ScheduledJob>(
@@ -36,7 +36,7 @@ class ScheduledJobServiceClient extends $grpc.Client {
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseStream<$5.ScheduledJob> listScheduledJobs($4.Empty request,
+  $grpc.ResponseStream<$5.ScheduledJob> listScheduledJobs($3.Empty request,
       {$grpc.CallOptions? options}) {
     return $createStreamingCall(
         _$listScheduledJobs, $async.Stream.fromIterable([request]),
@@ -60,12 +60,12 @@ abstract class ScheduledJobServiceBase extends $grpc.Service {
   $core.String get $name => 'anisort.ScheduledJobService';
 
   ScheduledJobServiceBase() {
-    $addMethod($grpc.ServiceMethod<$4.Empty, $5.ScheduledJob>(
+    $addMethod($grpc.ServiceMethod<$3.Empty, $5.ScheduledJob>(
         'ListScheduledJobs',
         listScheduledJobs_Pre,
         false,
         true,
-        ($core.List<$core.int> value) => $4.Empty.fromBuffer(value),
+        ($core.List<$core.int> value) => $3.Empty.fromBuffer(value),
         ($5.ScheduledJob value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$5.ScheduledJob, $5.ScheduledJob>(
         'CreateScheduledJob',
@@ -84,7 +84,7 @@ abstract class ScheduledJobServiceBase extends $grpc.Service {
   }
 
   $async.Stream<$5.ScheduledJob> listScheduledJobs_Pre(
-      $grpc.ServiceCall call, $async.Future<$4.Empty> request) async* {
+      $grpc.ServiceCall call, $async.Future<$3.Empty> request) async* {
     yield* listScheduledJobs(call, await request);
   }
 
@@ -99,7 +99,7 @@ abstract class ScheduledJobServiceBase extends $grpc.Service {
   }
 
   $async.Stream<$5.ScheduledJob> listScheduledJobs(
-      $grpc.ServiceCall call, $4.Empty request);
+      $grpc.ServiceCall call, $3.Empty request);
   $async.Future<$5.ScheduledJob> createScheduledJob(
       $grpc.ServiceCall call, $5.ScheduledJob request);
   $async.Future<$5.ScheduledJob> updateScheduledJob(

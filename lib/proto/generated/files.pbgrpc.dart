@@ -12,6 +12,7 @@ import 'dart:core' as $core;
 import 'package:grpc/service_api.dart' as $grpc;
 import 'files.pb.dart' as $1;
 import 'common.pb.dart' as $2;
+import 'google/protobuf/empty.pb.dart' as $3;
 export 'files.pb.dart';
 
 class LocalFileServiceClient extends $grpc.Client {
@@ -42,9 +43,9 @@ class LocalFileServiceClient extends $grpc.Client {
           '/anisort.files.LocalFileService/GetPageInfo',
           ($1.FilteredLocalFilesRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $2.PagesInfo.fromBuffer(value));
-  static final _$getDrives = $grpc.ClientMethod<$2.Empty, $1.DrivesReply>(
+  static final _$getDrives = $grpc.ClientMethod<$3.Empty, $1.DrivesReply>(
       '/anisort.files.LocalFileService/GetDrives',
-      ($2.Empty value) => value.writeToBuffer(),
+      ($3.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.DrivesReply.fromBuffer(value));
   static final _$getFilesInDirectory =
       $grpc.ClientMethod<$1.DirectoryFilesRequest, $1.DirectoryFilesReply>(
@@ -94,7 +95,7 @@ class LocalFileServiceClient extends $grpc.Client {
     return $createUnaryCall(_$getPageInfo, request, options: options);
   }
 
-  $grpc.ResponseFuture<$1.DrivesReply> getDrives($2.Empty request,
+  $grpc.ResponseFuture<$1.DrivesReply> getDrives($3.Empty request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getDrives, request, options: options);
   }
@@ -153,12 +154,12 @@ abstract class LocalFileServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $1.FilteredLocalFilesRequest.fromBuffer(value),
         ($2.PagesInfo value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$2.Empty, $1.DrivesReply>(
+    $addMethod($grpc.ServiceMethod<$3.Empty, $1.DrivesReply>(
         'GetDrives',
         getDrives_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $2.Empty.fromBuffer(value),
+        ($core.List<$core.int> value) => $3.Empty.fromBuffer(value),
         ($1.DrivesReply value) => value.writeToBuffer()));
     $addMethod(
         $grpc.ServiceMethod<$1.DirectoryFilesRequest, $1.DirectoryFilesReply>(
@@ -199,7 +200,7 @@ abstract class LocalFileServiceBase extends $grpc.Service {
   }
 
   $async.Future<$1.DrivesReply> getDrives_Pre(
-      $grpc.ServiceCall call, $async.Future<$2.Empty> request) async {
+      $grpc.ServiceCall call, $async.Future<$3.Empty> request) async {
     return getDrives(call, await request);
   }
 
@@ -214,7 +215,7 @@ abstract class LocalFileServiceBase extends $grpc.Service {
   $async.Future<$2.PagesInfo> getPageInfo(
       $grpc.ServiceCall call, $1.FilteredLocalFilesRequest request);
   $async.Future<$1.DrivesReply> getDrives(
-      $grpc.ServiceCall call, $2.Empty request);
+      $grpc.ServiceCall call, $3.Empty request);
   $async.Stream<$1.DirectoryFilesReply> getFilesInDirectory(
       $grpc.ServiceCall call, $async.Stream<$1.DirectoryFilesRequest> request);
 }
