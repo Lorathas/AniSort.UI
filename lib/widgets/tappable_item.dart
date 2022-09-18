@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import '../theme/swatches.dart';
 
 class TappableItem extends StatefulWidget {
-  const TappableItem({required this.child, this.onTap, this.padding, this.margin, this.highlightColor, Key? key}) : super(key: key);
+  const TappableItem({required this.child, this.onTap, this.onDoubleTap, this.padding, this.margin, this.highlightColor, Key? key}) : super(key: key);
 
   final Function()? onTap;
+  final Function()? onDoubleTap;
   final Widget child;
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
@@ -26,6 +27,7 @@ class _TappableItemState extends State<TappableItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () => widget.onTap?.call(),
+        onDoubleTap: () => widget.onDoubleTap?.call(),
         child: MouseRegion(
             onEnter: (_) => setState(() {
                   _hovered = true;

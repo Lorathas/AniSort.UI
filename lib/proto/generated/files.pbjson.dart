@@ -185,11 +185,12 @@ const DirectoryFilesRequest$json = const {
   '2': const [
     const {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
     const {'1': 'includeDrives', '3': 2, '4': 1, '5': 8, '10': 'includeDrives'},
+    const {'1': 'excludeFiles', '3': 3, '4': 1, '5': 8, '10': 'excludeFiles'},
   ],
 };
 
 /// Descriptor for `DirectoryFilesRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List directoryFilesRequestDescriptor = $convert.base64Decode('ChVEaXJlY3RvcnlGaWxlc1JlcXVlc3QSEgoEcGF0aBgBIAEoCVIEcGF0aBIkCg1pbmNsdWRlRHJpdmVzGAIgASgIUg1pbmNsdWRlRHJpdmVz');
+final $typed_data.Uint8List directoryFilesRequestDescriptor = $convert.base64Decode('ChVEaXJlY3RvcnlGaWxlc1JlcXVlc3QSEgoEcGF0aBgBIAEoCVIEcGF0aBIkCg1pbmNsdWRlRHJpdmVzGAIgASgIUg1pbmNsdWRlRHJpdmVzEiIKDGV4Y2x1ZGVGaWxlcxgDIAEoCFIMZXhjbHVkZUZpbGVz');
 @$core.Deprecated('Use directoryFilesReplyDescriptor instead')
 const DirectoryFilesReply$json = const {
   '1': 'DirectoryFilesReply',

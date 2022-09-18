@@ -20,6 +20,12 @@ class ScheduledJobServiceClient extends $grpc.Client {
           '/anisort.ScheduledJobService/ListScheduledJobs',
           ($3.Empty value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $5.ScheduledJob.fromBuffer(value));
+  static final _$listenForListOfScheduledJobs =
+      $grpc.ClientMethod<$3.Empty, $5.ScheduledJobCollection>(
+          '/anisort.ScheduledJobService/ListenForListOfScheduledJobs',
+          ($3.Empty value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $5.ScheduledJobCollection.fromBuffer(value));
   static final _$createScheduledJob =
       $grpc.ClientMethod<$5.ScheduledJob, $5.ScheduledJob>(
           '/anisort.ScheduledJobService/CreateScheduledJob',
@@ -30,6 +36,12 @@ class ScheduledJobServiceClient extends $grpc.Client {
           '/anisort.ScheduledJobService/UpdateScheduledJob',
           ($5.ScheduledJob value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $5.ScheduledJob.fromBuffer(value));
+  static final _$listenForScheduledJobUpdates =
+      $grpc.ClientMethod<$5.ScheduledJobFilterRequest, $5.ScheduledJobUpdate>(
+          '/anisort.ScheduledJobService/ListenForScheduledJobUpdates',
+          ($5.ScheduledJobFilterRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $5.ScheduledJobUpdate.fromBuffer(value));
 
   ScheduledJobServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -40,6 +52,14 @@ class ScheduledJobServiceClient extends $grpc.Client {
       {$grpc.CallOptions? options}) {
     return $createStreamingCall(
         _$listScheduledJobs, $async.Stream.fromIterable([request]),
+        options: options);
+  }
+
+  $grpc.ResponseStream<$5.ScheduledJobCollection> listenForListOfScheduledJobs(
+      $3.Empty request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(
+        _$listenForListOfScheduledJobs, $async.Stream.fromIterable([request]),
         options: options);
   }
 
@@ -54,6 +74,14 @@ class ScheduledJobServiceClient extends $grpc.Client {
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateScheduledJob, request, options: options);
   }
+
+  $grpc.ResponseStream<$5.ScheduledJobUpdate> listenForScheduledJobUpdates(
+      $5.ScheduledJobFilterRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(
+        _$listenForScheduledJobUpdates, $async.Stream.fromIterable([request]),
+        options: options);
+  }
 }
 
 abstract class ScheduledJobServiceBase extends $grpc.Service {
@@ -67,6 +95,13 @@ abstract class ScheduledJobServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $3.Empty.fromBuffer(value),
         ($5.ScheduledJob value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$3.Empty, $5.ScheduledJobCollection>(
+        'ListenForListOfScheduledJobs',
+        listenForListOfScheduledJobs_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) => $3.Empty.fromBuffer(value),
+        ($5.ScheduledJobCollection value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$5.ScheduledJob, $5.ScheduledJob>(
         'CreateScheduledJob',
         createScheduledJob_Pre,
@@ -81,11 +116,25 @@ abstract class ScheduledJobServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $5.ScheduledJob.fromBuffer(value),
         ($5.ScheduledJob value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$5.ScheduledJobFilterRequest,
+            $5.ScheduledJobUpdate>(
+        'ListenForScheduledJobUpdates',
+        listenForScheduledJobUpdates_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) =>
+            $5.ScheduledJobFilterRequest.fromBuffer(value),
+        ($5.ScheduledJobUpdate value) => value.writeToBuffer()));
   }
 
   $async.Stream<$5.ScheduledJob> listScheduledJobs_Pre(
       $grpc.ServiceCall call, $async.Future<$3.Empty> request) async* {
     yield* listScheduledJobs(call, await request);
+  }
+
+  $async.Stream<$5.ScheduledJobCollection> listenForListOfScheduledJobs_Pre(
+      $grpc.ServiceCall call, $async.Future<$3.Empty> request) async* {
+    yield* listenForListOfScheduledJobs(call, await request);
   }
 
   $async.Future<$5.ScheduledJob> createScheduledJob_Pre(
@@ -98,10 +147,20 @@ abstract class ScheduledJobServiceBase extends $grpc.Service {
     return updateScheduledJob(call, await request);
   }
 
+  $async.Stream<$5.ScheduledJobUpdate> listenForScheduledJobUpdates_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$5.ScheduledJobFilterRequest> request) async* {
+    yield* listenForScheduledJobUpdates(call, await request);
+  }
+
   $async.Stream<$5.ScheduledJob> listScheduledJobs(
+      $grpc.ServiceCall call, $3.Empty request);
+  $async.Stream<$5.ScheduledJobCollection> listenForListOfScheduledJobs(
       $grpc.ServiceCall call, $3.Empty request);
   $async.Future<$5.ScheduledJob> createScheduledJob(
       $grpc.ServiceCall call, $5.ScheduledJob request);
   $async.Future<$5.ScheduledJob> updateScheduledJob(
       $grpc.ServiceCall call, $5.ScheduledJob request);
+  $async.Stream<$5.ScheduledJobUpdate> listenForScheduledJobUpdates(
+      $grpc.ServiceCall call, $5.ScheduledJobFilterRequest request);
 }

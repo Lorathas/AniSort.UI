@@ -122,6 +122,7 @@ message DrivesReply {
 message DirectoryFilesRequest {
   string path = 1;
   bool includeDrives = 2;
+  bool excludeFiles = 3;
 }
 
 message DirectoryFilesReply {

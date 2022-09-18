@@ -826,6 +826,7 @@ class DirectoryFilesRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DirectoryFilesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'anisort.files'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
     ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'includeDrives', protoName: 'includeDrives')
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'excludeFiles', protoName: 'excludeFiles')
     ..hasRequiredFields = false
   ;
 
@@ -833,6 +834,7 @@ class DirectoryFilesRequest extends $pb.GeneratedMessage {
   factory DirectoryFilesRequest({
     $core.String? path,
     $core.bool? includeDrives,
+    $core.bool? excludeFiles,
   }) {
     final _result = create();
     if (path != null) {
@@ -840,6 +842,9 @@ class DirectoryFilesRequest extends $pb.GeneratedMessage {
     }
     if (includeDrives != null) {
       _result.includeDrives = includeDrives;
+    }
+    if (excludeFiles != null) {
+      _result.excludeFiles = excludeFiles;
     }
     return _result;
   }
@@ -881,6 +886,15 @@ class DirectoryFilesRequest extends $pb.GeneratedMessage {
   $core.bool hasIncludeDrives() => $_has(1);
   @$pb.TagNumber(2)
   void clearIncludeDrives() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.bool get excludeFiles => $_getBF(2);
+  @$pb.TagNumber(3)
+  set excludeFiles($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasExcludeFiles() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearExcludeFiles() => clearField(3);
 }
 
 class DirectoryFilesReply_DirectoryFile extends $pb.GeneratedMessage {

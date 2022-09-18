@@ -8,37 +8,39 @@ import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart';
 import 'package:path/path.dart' as p;
 
-import '../../theme/swatches.dart';
 import '../tappable_item.dart';
 
 class RemoteFilePicker extends StatefulWidget {
-  const RemoteFilePicker({Key? key}) : super(key: key);
+  const RemoteFilePicker({Key? key, this.type = DirectoryFilesReply_DirectoryFileType.File}) : super(key: key);
+
+  final DirectoryFilesReply_DirectoryFileType type;
 
   @override
   State<StatefulWidget> createState() => _RemoteFilePickerState();
 }
 
 class _RemoteFilePickerState extends State<RemoteFilePicker> {
-  _RemoteFilePickerState({localFileClient}) : localFileClient = localFileClient ?? getIt.get<LocalFileServiceClient>();
+  _RemoteFilePickerState({localFileClient}) : _localFileClient = localFileClient ?? getIt.get<LocalFileServiceClient>();
 
   final _pathSegments = Queue<String>();
 
-  LocalFileServiceClient localFileClient;
+  LocalFileServiceClient _localFileClient;
   final _pathRequestStream = StreamController<DirectoryFilesRequest>.broadcast();
 
-  Stream<DirectoryFilesReply> _directoryFilesStream() {
-    return localFileClient.getFilesInDirectory(_pathRequestStream.stream);
-  }
+  ResponseStream<DirectoryFilesReply>? _currentDirectoryFilesStream;
+
+  get _directoryFilesStream => _currentDirectoryFilesStream ??= _localFileClient.getFilesInDirectory(_pathRequestStream.stream);
 
   Future<DrivesReply> _loadAvailableDrives() {
-    return localFileClient.getDrives(Empty());
+    return _localFileClient.getDrives(Empty());
   }
 
-  late String _path;
+  String _path = "";
 
   _setPath(String path) {
     _path = path;
-    _pathRequestStream.add(DirectoryFilesRequest(path: _path, includeDrives: true));
+    _pathRequestStream
+        .add(DirectoryFilesRequest(path: _path, includeDrives: true, excludeFiles: widget.type == DirectoryFilesReply_DirectoryFileType.Directory));
   }
 
   _moveUp() {
@@ -46,14 +48,21 @@ class _RemoteFilePickerState extends State<RemoteFilePicker> {
 
     if (paths.length > 1) {
       _path = p.joinAll(paths.sublist(0, paths.length - 1));
-      _pathRequestStream.add(DirectoryFilesRequest(path: _path, includeDrives: true));
+      _pathRequestStream
+          .add(DirectoryFilesRequest(path: _path, includeDrives: true, excludeFiles: widget.type == DirectoryFilesReply_DirectoryFileType.Directory));
     }
+  }
+
+  @override
+  void deactivate() {
+    _currentDirectoryFilesStream?.cancel();
+    super.deactivate();
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DirectoryFilesReply>(
-        stream: _directoryFilesStream(),
+        stream: _directoryFilesStream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             final grpcError = snapshot.error as GrpcError;
@@ -120,6 +129,7 @@ class _RemoteFilePickerState extends State<RemoteFilePicker> {
                                 shrinkWrap: true,
                                 itemCount: snapshot.data!.files.length,
                                 itemBuilder: (context, index) => _DirectoryContentsItem(
+                                      selectorType: widget.type,
                                       directoryFile: snapshot.data!.files[index],
                                       onPathChanged: (value) => _setPath(value),
                                       onFileSelected: (value) => Navigator.pop(context, value),
@@ -138,10 +148,11 @@ class _RemoteFilePickerState extends State<RemoteFilePicker> {
 
 class _DirectoryContentsItem extends StatelessWidget {
   final DirectoryFilesReply_DirectoryFile directoryFile;
+  final DirectoryFilesReply_DirectoryFileType selectorType;
   final Function(String)? onPathChanged;
   final Function(String)? onFileSelected;
 
-  const _DirectoryContentsItem({super.key, required this.directoryFile, this.onPathChanged, this.onFileSelected});
+  const _DirectoryContentsItem({super.key, required this.directoryFile, required this.selectorType, this.onPathChanged, this.onFileSelected});
 
   void _onTap() {
     switch (directoryFile.type) {
@@ -154,12 +165,24 @@ class _DirectoryContentsItem extends StatelessWidget {
     }
   }
 
+  void _onDoubleTap() {
+    switch (directoryFile.type) {
+      case DirectoryFilesReply_DirectoryFileType.Directory:
+        onPathChanged?.call(directoryFile.path);
+        break;
+      case DirectoryFilesReply_DirectoryFileType.File:
+        _onTap();
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Tooltip(
       message: directoryFile.name,
       child: TappableItem(
           onTap: _onTap,
+          onDoubleTap: _onDoubleTap,
           child: SizedBox(
               height: 36,
               child: Row(children: [
