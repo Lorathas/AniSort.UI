@@ -2,6 +2,7 @@ import 'package:anisort_ui/proto/generated/anime.pbgrpc.dart';
 import 'package:anisort_ui/proto/generated/files.pbgrpc.dart';
 import 'package:anisort_ui/proto/generated/jobs.pbgrpc.dart';
 import 'package:anisort_ui/proto/generated/scheduled_jobs.pbgrpc.dart';
+import 'package:anisort_ui/proto/generated/settings.pbgrpc.dart';
 import 'package:anisort_ui/service/grpc_service.dart';
 import 'package:grpc/grpc.dart';
 import 'package:injectable/injectable.dart';
@@ -23,4 +24,7 @@ abstract class AppModule {
 
   @factoryMethod
   ScheduledJobServiceClient scheduledJobServiceClient(ClientChannel channel) => ScheduledJobServiceClient(channel);
+
+  @factoryMethod
+  SettingsServiceClient settingsServiceClient(ClientChannel channel) => SettingsServiceClient(channel);
 }

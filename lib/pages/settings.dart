@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../ioc.dart';
+import '../widgets/settings_widget.dart';
+
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(
+        appBar: AppBar(title: const Text('Settings')),
+      body: SettingsWidget(),
+    );
   }
 
 }

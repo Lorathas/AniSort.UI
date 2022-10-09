@@ -10,8 +10,8 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'google/protobuf/timestamp.pb.dart' as $6;
-import 'episode_files.pb.dart' as $7;
+import 'google/protobuf/timestamp.pb.dart' as $7;
+import 'episode_files.pb.dart' as $8;
 
 class AnimeReply extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AnimeReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'anisort.anime'), createEmptyInstance: create)
@@ -26,8 +26,8 @@ class AnimeReply extends $pb.GeneratedMessage {
     ..aOS(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'otherName', protoName: 'otherName')
     ..pPS(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'synonyms')
     ..pc<Episode>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'episodes', $pb.PbFieldType.PM, subBuilder: Episode.create)
-    ..aOM<$6.Timestamp>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt', protoName: 'createdAt', subBuilder: $6.Timestamp.create)
-    ..aOM<$6.Timestamp>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'updatedAt', protoName: 'updatedAt', subBuilder: $6.Timestamp.create)
+    ..aOM<$7.Timestamp>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt', protoName: 'createdAt', subBuilder: $7.Timestamp.create)
+    ..aOM<$7.Timestamp>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'updatedAt', protoName: 'updatedAt', subBuilder: $7.Timestamp.create)
     ..hasRequiredFields = false
   ;
 
@@ -44,8 +44,8 @@ class AnimeReply extends $pb.GeneratedMessage {
     $core.String? otherName,
     $core.Iterable<$core.String>? synonyms,
     $core.Iterable<Episode>? episodes,
-    $6.Timestamp? createdAt,
-    $6.Timestamp? updatedAt,
+    $7.Timestamp? createdAt,
+    $7.Timestamp? updatedAt,
   }) {
     final _result = create();
     if (animeId != null) {
@@ -198,26 +198,26 @@ class AnimeReply extends $pb.GeneratedMessage {
   $core.List<Episode> get episodes => $_getList(10);
 
   @$pb.TagNumber(12)
-  $6.Timestamp get createdAt => $_getN(11);
+  $7.Timestamp get createdAt => $_getN(11);
   @$pb.TagNumber(12)
-  set createdAt($6.Timestamp v) { setField(12, v); }
+  set createdAt($7.Timestamp v) { setField(12, v); }
   @$pb.TagNumber(12)
   $core.bool hasCreatedAt() => $_has(11);
   @$pb.TagNumber(12)
   void clearCreatedAt() => clearField(12);
   @$pb.TagNumber(12)
-  $6.Timestamp ensureCreatedAt() => $_ensure(11);
+  $7.Timestamp ensureCreatedAt() => $_ensure(11);
 
   @$pb.TagNumber(13)
-  $6.Timestamp get updatedAt => $_getN(12);
+  $7.Timestamp get updatedAt => $_getN(12);
   @$pb.TagNumber(13)
-  set updatedAt($6.Timestamp v) { setField(13, v); }
+  set updatedAt($7.Timestamp v) { setField(13, v); }
   @$pb.TagNumber(13)
   $core.bool hasUpdatedAt() => $_has(12);
   @$pb.TagNumber(13)
   void clearUpdatedAt() => clearField(13);
   @$pb.TagNumber(13)
-  $6.Timestamp ensureUpdatedAt() => $_ensure(12);
+  $7.Timestamp ensureUpdatedAt() => $_ensure(12);
 }
 
 class Episode extends $pb.GeneratedMessage {
@@ -231,7 +231,7 @@ class Episode extends $pb.GeneratedMessage {
     ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'kanjiName', protoName: 'kanjiName')
     ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rating', $pb.PbFieldType.O3)
     ..a<$core.int>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'voteCount', $pb.PbFieldType.O3, protoName: 'voteCount')
-    ..pc<$7.EpisodeFileReply>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'files', $pb.PbFieldType.PM, subBuilder: $7.EpisodeFileReply.create)
+    ..pc<$8.EpisodeFileReply>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'files', $pb.PbFieldType.PM, subBuilder: $8.EpisodeFileReply.create)
     ..hasRequiredFields = false
   ;
 
@@ -246,7 +246,7 @@ class Episode extends $pb.GeneratedMessage {
     $core.String? kanjiName,
     $core.int? rating,
     $core.int? voteCount,
-    $core.Iterable<$7.EpisodeFileReply>? files,
+    $core.Iterable<$8.EpisodeFileReply>? files,
   }) {
     final _result = create();
     if (episodeId != null) {
@@ -386,7 +386,7 @@ class Episode extends $pb.GeneratedMessage {
   void clearVoteCount() => clearField(9);
 
   @$pb.TagNumber(10)
-  $core.List<$7.EpisodeFileReply> get files => $_getList(9);
+  $core.List<$8.EpisodeFileReply> get files => $_getList(9);
 }
 
 class FileIdRequest extends $pb.GeneratedMessage {

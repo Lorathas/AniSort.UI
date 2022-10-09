@@ -9,7 +9,7 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'google/protobuf/struct.pb.dart' as $8;
+import 'google/protobuf/struct.pb.dart' as $9;
 
 import 'jobs.pbenum.dart' as $4;
 import 'scheduled_jobs.pbenum.dart';
@@ -23,8 +23,8 @@ class ScheduledJob extends $pb.GeneratedMessage {
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..e<$4.JobType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: $4.JobType.SortFile, valueOf: $4.JobType.valueOf, enumValues: $4.JobType.values)
     ..e<ScheduleType>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scheduleType', $pb.PbFieldType.OE, protoName: 'scheduleType', defaultOrMaker: ScheduleType.Timed, valueOf: ScheduleType.valueOf, enumValues: ScheduleType.values)
-    ..aOM<$8.Struct>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'options', subBuilder: $8.Struct.create)
-    ..aOM<$8.Struct>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scheduleOptions', protoName: 'scheduleOptions', subBuilder: $8.Struct.create)
+    ..aOM<$9.Struct>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'options', subBuilder: $9.Struct.create)
+    ..aOM<$9.Struct>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scheduleOptions', protoName: 'scheduleOptions', subBuilder: $9.Struct.create)
     ..hasRequiredFields = false
   ;
 
@@ -34,8 +34,8 @@ class ScheduledJob extends $pb.GeneratedMessage {
     $core.String? name,
     $4.JobType? type,
     ScheduleType? scheduleType,
-    $8.Struct? options,
-    $8.Struct? scheduleOptions,
+    $9.Struct? options,
+    $9.Struct? scheduleOptions,
   }) {
     final _result = create();
     if (scheduledJobId != null) {
@@ -116,26 +116,26 @@ class ScheduledJob extends $pb.GeneratedMessage {
   void clearScheduleType() => clearField(4);
 
   @$pb.TagNumber(5)
-  $8.Struct get options => $_getN(4);
+  $9.Struct get options => $_getN(4);
   @$pb.TagNumber(5)
-  set options($8.Struct v) { setField(5, v); }
+  set options($9.Struct v) { setField(5, v); }
   @$pb.TagNumber(5)
   $core.bool hasOptions() => $_has(4);
   @$pb.TagNumber(5)
   void clearOptions() => clearField(5);
   @$pb.TagNumber(5)
-  $8.Struct ensureOptions() => $_ensure(4);
+  $9.Struct ensureOptions() => $_ensure(4);
 
   @$pb.TagNumber(6)
-  $8.Struct get scheduleOptions => $_getN(5);
+  $9.Struct get scheduleOptions => $_getN(5);
   @$pb.TagNumber(6)
-  set scheduleOptions($8.Struct v) { setField(6, v); }
+  set scheduleOptions($9.Struct v) { setField(6, v); }
   @$pb.TagNumber(6)
   $core.bool hasScheduleOptions() => $_has(5);
   @$pb.TagNumber(6)
   void clearScheduleOptions() => clearField(6);
   @$pb.TagNumber(6)
-  $8.Struct ensureScheduleOptions() => $_ensure(5);
+  $9.Struct ensureScheduleOptions() => $_ensure(5);
 }
 
 class ScheduledJobCollection extends $pb.GeneratedMessage {
@@ -185,8 +185,8 @@ class ScheduledJobUpdate extends $pb.GeneratedMessage {
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..e<$4.JobType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: $4.JobType.SortFile, valueOf: $4.JobType.valueOf, enumValues: $4.JobType.values)
     ..e<ScheduleType>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scheduleType', $pb.PbFieldType.OE, protoName: 'scheduleType', defaultOrMaker: ScheduleType.Timed, valueOf: ScheduleType.valueOf, enumValues: ScheduleType.values)
-    ..aOM<$8.Struct>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'options', subBuilder: $8.Struct.create)
-    ..aOM<$8.Struct>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scheduleOptions', protoName: 'scheduleOptions', subBuilder: $8.Struct.create)
+    ..aOM<$9.Struct>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'options', subBuilder: $9.Struct.create)
+    ..aOM<$9.Struct>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scheduleOptions', protoName: 'scheduleOptions', subBuilder: $9.Struct.create)
     ..e<$2.HubUpdate>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'update', $pb.PbFieldType.OE, defaultOrMaker: $2.HubUpdate.Initial, valueOf: $2.HubUpdate.valueOf, enumValues: $2.HubUpdate.values)
     ..hasRequiredFields = false
   ;
@@ -197,8 +197,8 @@ class ScheduledJobUpdate extends $pb.GeneratedMessage {
     $core.String? name,
     $4.JobType? type,
     ScheduleType? scheduleType,
-    $8.Struct? options,
-    $8.Struct? scheduleOptions,
+    $9.Struct? options,
+    $9.Struct? scheduleOptions,
     $2.HubUpdate? update,
   }) {
     final _result = create();
@@ -283,26 +283,26 @@ class ScheduledJobUpdate extends $pb.GeneratedMessage {
   void clearScheduleType() => clearField(4);
 
   @$pb.TagNumber(5)
-  $8.Struct get options => $_getN(4);
+  $9.Struct get options => $_getN(4);
   @$pb.TagNumber(5)
-  set options($8.Struct v) { setField(5, v); }
+  set options($9.Struct v) { setField(5, v); }
   @$pb.TagNumber(5)
   $core.bool hasOptions() => $_has(4);
   @$pb.TagNumber(5)
   void clearOptions() => clearField(5);
   @$pb.TagNumber(5)
-  $8.Struct ensureOptions() => $_ensure(4);
+  $9.Struct ensureOptions() => $_ensure(4);
 
   @$pb.TagNumber(6)
-  $8.Struct get scheduleOptions => $_getN(5);
+  $9.Struct get scheduleOptions => $_getN(5);
   @$pb.TagNumber(6)
-  set scheduleOptions($8.Struct v) { setField(6, v); }
+  set scheduleOptions($9.Struct v) { setField(6, v); }
   @$pb.TagNumber(6)
   $core.bool hasScheduleOptions() => $_has(5);
   @$pb.TagNumber(6)
   void clearScheduleOptions() => clearField(6);
   @$pb.TagNumber(6)
-  $8.Struct ensureScheduleOptions() => $_ensure(5);
+  $9.Struct ensureScheduleOptions() => $_ensure(5);
 
   @$pb.TagNumber(7)
   $2.HubUpdate get update => $_getN(6);
