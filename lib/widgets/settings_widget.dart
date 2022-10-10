@@ -30,12 +30,37 @@ const _textFieldMargin = EdgeInsets.symmetric(horizontal: _headerHorizontalMargi
 class _SettingsState extends State<SettingsWidget> implements Disposable {
   late StreamSubscription<SettingsReply> updates;
 
+  final _rootPathController = TextEditingController();
+  final _tvPathController = TextEditingController();
+  final _moviePathController = TextEditingController();
+  final _formatController = TextEditingController();
+
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _maxFileRetriesController = TextEditingController();
+  final _fileSearchCooldownController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
 
-    widget.settingsService.listenForSettingsChanges()
-        .listen((updated) => _settings.mergeFromMessage(updated));
+    updates = widget.settingsService.listenForSettingsChanges().listen((updated) => setState(() {
+          _settings.mergeFromMessage(updated);
+
+          _updateControllerTextFromSettings();
+    }));
+  }
+
+  _updateControllerTextFromSettings() {
+    _rootPathController.text = _settings.destination.path;
+    _tvPathController.text = _settings.destination.tvPath;
+    _moviePathController.text = _settings.destination.moviePath;
+    _formatController.text = _settings.destination.format;
+
+    _usernameController.text = _settings.aniDb.username;
+    _passwordController.text = _settings.aniDb.password;
+    _maxFileRetriesController.text = _settings.aniDb.maxFileSearchRetries.toString();
+    _fileSearchCooldownController.text = _settings.aniDb.fileSearchCooldownMinutes.toString();
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -51,14 +76,29 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
       setState(mutator);
     }
 
+    _formKey.currentState!.validate();
+
     if (_debounce?.isActive ?? false) {
       _debounce!.cancel();
     }
 
     _debounce = Timer(const Duration(milliseconds: 500), () {
-      widget.settingsService.saveSettings(_settings);
-      _debounce = null;
+      if (_formKey.currentState!.validate()) {
+        widget.settingsService.saveSettings(_settings);
+
+        _debounce = null;
+      }
     });
+  }
+
+  _requiredStringValidator(String fieldName) {
+    return (value) {
+      if (value == null || value.isEmpty) {
+        return '$fieldName is required';
+      }
+
+      return null;
+    };
   }
 
   @override
@@ -129,7 +169,8 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                   margin: _textFieldMargin,
                   child: TextFormField(
                     decoration: const InputDecoration(labelText: 'Root Path'),
-                    initialValue: _settings.destination.path,
+                    controller: _rootPathController,
+                    validator: _requiredStringValidator('Root Path'),
                     onChanged: (value) =>
                         _queueSave(() {
                           _settings.destination.path = value;
@@ -140,7 +181,8 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                   margin: _textFieldMargin,
                   child: TextFormField(
                     decoration: const InputDecoration(labelText: 'Filename Format'),
-                    initialValue: _settings.destination.format,
+                    controller: _formatController,
+                    validator: _requiredStringValidator('Filename Format'),
                     onChanged: (value) => _queueSave(() {
                           _settings.destination.format = value;
                         }),
@@ -150,7 +192,8 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                   margin: _textFieldMargin,
                   child: TextFormField(
                     decoration: const InputDecoration(labelText: 'TV Path'),
-                    initialValue: _settings.destination.tvPath,
+                    controller: _tvPathController,
+                    validator: _requiredStringValidator('TV Path'),
                     onChanged: (value) =>
                         _queueSave(() {
                           _settings.destination.tvPath = value;
@@ -161,7 +204,8 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                   margin: _textFieldMargin,
                   child: TextFormField(
                     decoration: const InputDecoration(labelText: 'Movie Path'),
-                    initialValue: _settings.destination.moviePath,
+                    controller: _moviePathController,
+                    validator: _requiredStringValidator('Movie Path'),
                     onChanged: (value) =>
                         _queueSave(() {
                           _settings.destination.moviePath = value;
@@ -186,7 +230,8 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                   margin: _textFieldMargin,
                   child: TextFormField(
                     decoration: const InputDecoration(labelText: 'Username'),
-                    initialValue: _settings.aniDb.username,
+                    controller: _usernameController,
+                    validator: _requiredStringValidator('Username'),
                     onChanged: (value) =>
                         _queueSave(() {
                           _settings.aniDb.username = value;
@@ -197,7 +242,8 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                   margin: _textFieldMargin,
                   child: TextFormField(
                     decoration: const InputDecoration(labelText: 'Password'),
-                    initialValue: _settings.aniDb.password,
+                    controller: _passwordController,
+                    validator: _requiredStringValidator('Password'),
                     onChanged: (value) =>
                         _queueSave(() {
                           _settings.aniDb.password = value;
@@ -209,7 +255,7 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                   child: TextFormField(
                     decoration: const InputDecoration(labelText: 'Max File Retries'),
                     keyboardType: TextInputType.number,
-                    initialValue: _settings.aniDb.maxFileSearchRetries.toString(),
+                    controller: _maxFileRetriesController,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     onChanged: (value) =>
                         _queueSave(() {
@@ -222,7 +268,7 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                   child: TextFormField(
                     decoration: const InputDecoration(labelText: 'File Search Cooldown (In Minutes)'),
                     keyboardType: TextInputType.number,
-                    initialValue: _settings.aniDb.fileSearchCooldownMinutes.toString(),
+                    controller: _fileSearchCooldownController,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     onChanged: (value) =>
                         _queueSave(() {
@@ -247,9 +293,7 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
   void activate() {
     super.activate();
 
-    if (updates.isPaused) {
       updates.resume();
-    }
   }
 
   @override

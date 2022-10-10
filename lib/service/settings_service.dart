@@ -16,6 +16,7 @@ class SettingsService {
     _settingsWriteStream = StreamController<SettingsReply>();
     _settingsUpdateStream = settingsClient.activeUpdates(_settingsWriteStream.stream);
     _settingsBroadcastStream = _settingsUpdateStream.asBroadcastStream();
+    _settingsBroadcastStream.listen((settings) => _lastSettings = settings);
   }
 
   saveSettings(SettingsReply settings) {
