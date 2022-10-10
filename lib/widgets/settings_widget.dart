@@ -102,6 +102,30 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
   }
 
   @override
+  void activate() {
+    super.activate();
+
+    updates.resume();
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+
+    updates.pause();
+  }
+
+  @override
+  FutureOr onDispose() {
+    if (_debounce != null) {
+      widget.settingsService.saveSettings(_settings);
+      _debounce!.cancel();
+    }
+    updates.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Center(
@@ -180,17 +204,6 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                 Container(
                   margin: _textFieldMargin,
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: 'Filename Format'),
-                    controller: _formatController,
-                    validator: _requiredStringValidator('Filename Format'),
-                    onChanged: (value) => _queueSave(() {
-                          _settings.destination.format = value;
-                        }),
-                  ),
-                ),
-                Container(
-                  margin: _textFieldMargin,
-                  child: TextFormField(
                     decoration: const InputDecoration(labelText: 'TV Path'),
                     controller: _tvPathController,
                     validator: _requiredStringValidator('TV Path'),
@@ -215,10 +228,22 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                 CheckboxListTile(
                     title: const Text('Fragment Series'),
                     value: _settings.destination.fragmentSeries,
+                    subtitle: const Text('Move files to root path instead of library path with existing files for the series'),
                     onChanged: (value) =>
                         _queueSave(() {
                           _settings.destination.fragmentSeries = value!;
                         })),
+                Container(
+                  margin: _textFieldMargin,
+                  child: TextFormField(
+                    decoration: const InputDecoration(labelText: 'Filename Format'),
+                    controller: _formatController,
+                    validator: _requiredStringValidator('Filename Format'),
+                    onChanged: (value) => _queueSave(() {
+                      _settings.destination.format = value;
+                    }),
+                  ),
+                ),
                 Container(
                     alignment: Alignment.centerLeft,
                     margin: _headerMargin,
@@ -287,29 +312,5 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
             )),
       ),
     );
-  }
-
-  @override
-  void activate() {
-    super.activate();
-
-      updates.resume();
-  }
-
-  @override
-  void deactivate() {
-    super.deactivate();
-
-    updates.pause();
-  }
-
-  @override
-  FutureOr onDispose() {
-    if (_debounce != null) {
-      widget.settingsService.saveSettings(_settings);
-      _debounce!.cancel();
-    }
-    updates.cancel();
-    super.dispose();
   }
 }
