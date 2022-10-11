@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-import 'package:protobuf/protobuf.dart';
 import '../ioc.dart';
 
 @injectable
@@ -40,6 +39,14 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
   final _maxFileRetriesController = TextEditingController();
   final _fileSearchCooldownController = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
+
+  final SettingsReply _settings = SettingsReply()
+    ..aniDb = AniDbConfigReply()
+    ..destination = DestinationConfigReply();
+
+  Timer? _debounce;
+
   @override
   void initState() {
     super.initState();
@@ -62,14 +69,6 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
     _maxFileRetriesController.text = _settings.aniDb.maxFileSearchRetries.toString();
     _fileSearchCooldownController.text = _settings.aniDb.fileSearchCooldownMinutes.toString();
   }
-
-  final _formKey = GlobalKey<FormState>();
-
-  final SettingsReply _settings = SettingsReply()
-    ..aniDb = AniDbConfigReply()
-    ..destination = DestinationConfigReply();
-
-  Timer? _debounce;
 
   _queueSave(Function()? mutator) {
     if (mutator != null) {
@@ -122,6 +121,16 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
       _debounce!.cancel();
     }
     updates.cancel();
+
+    _rootPathController.dispose();
+    _tvPathController.dispose();
+    _moviePathController.dispose();
+    _formatController.dispose();
+    _usernameController.dispose();
+    _passwordController.dispose();
+    _maxFileRetriesController.dispose();
+    _fileSearchCooldownController.dispose();
+
     super.dispose();
   }
 
