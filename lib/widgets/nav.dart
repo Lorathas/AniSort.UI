@@ -19,6 +19,7 @@ class NavigationPane extends StatefulWidget {
 
 class _NavigationPaneState extends State<NavigationPane> {
   bool _extended = false;
+  int _selectedIndex = 1;
   
   @override
   Widget build(BuildContext context) {
@@ -31,10 +32,14 @@ class _NavigationPaneState extends State<NavigationPane> {
         NavigationRailDestination(icon: Icon(Icons.tv), label: Text('Anime')),
         NavigationRailDestination(icon: Icon(Icons.settings), label: Text('Settings')),
       ],
-      selectedIndex: 0,
+      selectedIndex: _selectedIndex,
       indicatorColor: slate.shade300,
       extended: _extended,
       onDestinationSelected: (index) {
+        if (index == _selectedIndex) {
+          return;
+        }
+
         switch (index) {
           case 0:
             setState(() {_extended = !_extended;});
@@ -54,6 +59,10 @@ class _NavigationPaneState extends State<NavigationPane> {
           case 5:
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsPage()));
             break;
+        }
+
+        if (index != 0) {
+          _selectedIndex = index;
         }
       },
     );
