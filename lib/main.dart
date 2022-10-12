@@ -38,6 +38,9 @@ class AniSort extends StatelessWidget {
         unselectedWidgetColor: slate.shade500,
         bottomAppBarTheme: BottomAppBarTheme(color: slate.shade800),
         appBarTheme: AppBarTheme(backgroundColor: slate.shade800),
+        dialogTheme: DialogTheme(
+          backgroundColor: slate.shade200,
+        ),
         navigationRailTheme: NavigationRailThemeData(
             backgroundColor: slate.shade800,
             indicatorColor: slate.shade100,
@@ -58,6 +61,9 @@ class AniSort extends StatelessWidget {
         unselectedWidgetColor: slate.shade500,
         bottomAppBarTheme: BottomAppBarTheme(color: slate.shade800),
         appBarTheme: AppBarTheme(backgroundColor: slate.shade800),
+        dialogTheme: DialogTheme(
+          backgroundColor: slate.shade900,
+        ),
         navigationRailTheme: NavigationRailThemeData(
             backgroundColor: slate.shade800,
             indicatorColor: slate.shade100,

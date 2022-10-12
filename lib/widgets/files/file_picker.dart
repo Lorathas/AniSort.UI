@@ -118,7 +118,7 @@ class _RemoteFilePickerState extends State<RemoteFilePicker> {
                               child: ClipRRect(
                             borderRadius: const BorderRadius.all(Radius.circular(4)),
                             child: Container(
-                                decoration: BoxDecoration(color: Theme.of(context).canvasColor), padding: const EdgeInsets.all(6), child: Text(_path)),
+                                decoration: BoxDecoration(color: Theme.of(context).unselectedWidgetColor), padding: const EdgeInsets.all(6), child: Text(_path)),
                           )),
                           IconButton(
                             icon: const Icon(Icons.keyboard_return),
