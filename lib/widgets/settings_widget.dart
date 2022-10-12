@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:anisort_ui/paths/path_format_utils.dart';
+import 'package:anisort_ui/proto/generated/files.pb.dart';
 import 'package:anisort_ui/proto/generated/settings.pb.dart';
 import 'package:anisort_ui/service/settings_service.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,147 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import '../ioc.dart';
+import 'files/file_picker.dart';
+
+const double _headerFontSize = 24;
+const double _headerTopMargin = 24;
+const double _headerHorizontalMargin = 16;
+const double _headerVerticalMargin = 24;
+
+const _headerMargin = EdgeInsets.symmetric(horizontal: _headerHorizontalMargin, vertical: _headerVerticalMargin);
+const _textFieldMargin = EdgeInsets.symmetric(horizontal: _headerHorizontalMargin);
+
+_requiredStringValidator(String fieldName) {
+  return (value) {
+    if (value == null || value.isEmpty) {
+      return '$fieldName is required';
+    }
+
+    return null;
+  };
+}
+
+Future<String?> _pickDirectoryPath(BuildContext context) async {
+  return showDialog<String?>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Choose File'),
+          content: const RemoteFilePicker(type: DirectoryFilesReply_DirectoryFileType.Directory),
+          actions: [
+            TextButton(
+              style: TextButton.styleFrom(textStyle: Theme.of(context).textTheme.labelLarge),
+              child: const Text('Cancel'),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        );
+      });
+}
+
+class _LibrarySettings extends StatefulWidget {
+  final List<String> paths;
+  final Function(List<String>) onPathsChanged;
+
+  const _LibrarySettings({super.key, required this.paths, required this.onPathsChanged});
+
+  @override
+  State<StatefulWidget> createState() => _LibrarySettingsState();
+}
+
+class _LibrarySettingsState extends State<_LibrarySettings> {
+  final List<String> _pendingPaths = List.empty(growable: true);
+
+  _removeRow(index) {
+    if (index > widget.paths.length + _pendingPaths.length || index < 0) {
+      return;
+    }
+
+    final allPaths = List<String>.from(widget.paths, growable: true);
+    allPaths.addAll(_pendingPaths);
+
+    allPaths.removeAt(index);
+
+    setState(() {
+      _pendingPaths.clear();
+    });
+    widget.onPathsChanged(allPaths);
+  }
+
+  _updatePath(index, value) {
+    if (value == null || index > widget.paths.length + _pendingPaths.length || index < 0) {
+      return;
+    }
+
+    final allPaths = List<String>.from(widget.paths, growable: true);
+    allPaths.addAll(_pendingPaths);
+
+    allPaths[index] = value;
+
+    setState(() {
+      _pendingPaths.clear();
+    });
+    widget.onPathsChanged(allPaths);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final rows = List<DataRow>.empty(growable: true);
+
+    for (var idx = 0; idx < widget.paths.length; idx++) {
+      final path = widget.paths[idx];
+
+      rows.add(DataRow(cells: [
+        DataCell(Text(path.isEmpty ? 'Path' : path), showEditIcon: true, placeholder: path.isEmpty, onTap: () async => _updatePath(idx, await _pickDirectoryPath(context))),
+        DataCell(IconButton(icon: const Icon(Icons.remove), onPressed: () => _removeRow(idx))),
+      ]));
+    }
+
+    for (var idx = 0; idx < _pendingPaths.length; idx++) {
+      final path = _pendingPaths[idx];
+
+      rows.add(
+        DataRow(cells: [
+          DataCell(Text(path.isEmpty ? 'Path' : path), showEditIcon: true, placeholder: path.isEmpty, onTap: () async => _updatePath(idx + widget.paths.length, await _pickDirectoryPath(context))),
+          DataCell(IconButton(icon: const Icon(Icons.remove), onPressed: () => _removeRow(idx)))
+        ]),
+      );
+    }
+
+    return Column(children: [
+      Row(
+        children: [
+          Expanded(
+            child: Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: _headerHorizontalMargin),
+                child: const Text(
+                  'Library',
+                  style: TextStyle(fontSize: _headerFontSize),
+                )),
+          ),
+          IntrinsicWidth(
+              child: IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () => setState(() {
+              _pendingPaths.add("");
+            }),
+          )),
+        ],
+      ),
+      LayoutBuilder(
+          builder: (context, constraints) => ConstrainedBox(
+              constraints: BoxConstraints(minWidth: constraints.maxWidth),
+              child: DataTable(
+                columns: const [
+                  DataColumn(label: Text('Library Path')),
+                  DataColumn(label: Text(''), numeric: true),
+                ],
+                rows: rows,
+              ))),
+    ]);
+  }
+}
 
 @injectable
 class Settings extends StatefulWidget {
@@ -18,14 +160,6 @@ class Settings extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _SettingsState();
 }
-
-const double _headerFontSize = 24;
-const double _headerTopMargin = 24;
-const double _headerHorizontalMargin = 16;
-const double _headerVerticalMargin = 24;
-
-const _headerMargin = EdgeInsets.symmetric(horizontal: _headerHorizontalMargin, vertical: _headerVerticalMargin);
-const _textFieldMargin = EdgeInsets.symmetric(horizontal: _headerHorizontalMargin);
 
 class _SettingsState extends State<Settings> implements Disposable {
   late StreamSubscription<SettingsReply> updates;
@@ -53,6 +187,7 @@ class _SettingsState extends State<Settings> implements Disposable {
     super.initState();
 
     updates = widget.settingsService.listenForSettingsChanges().listen((updated) => setState(() {
+          _settings.libraryPaths.clear();
           _settings.mergeFromMessage(updated);
 
           _updateControllerTextFromSettings();
@@ -107,16 +242,6 @@ class _SettingsState extends State<Settings> implements Disposable {
     });
   }
 
-  _requiredStringValidator(String fieldName) {
-    return (value) {
-      if (value == null || value.isEmpty) {
-        return '$fieldName is required';
-      }
-
-      return null;
-    };
-  }
-
   @override
   void activate() {
     super.activate();
@@ -159,6 +284,13 @@ class _SettingsState extends State<Settings> implements Disposable {
             key: _formKey,
             child: Column(
               children: [
+                _LibrarySettings(
+                    paths: _settings.libraryPaths,
+                    onPathsChanged: (paths) => _queueSave(() {
+                          _settings.libraryPaths.clear();
+                          _settings.libraryPaths.addAll(paths);
+                        })),
+                const Divider(),
                 Container(
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.only(left: _headerHorizontalMargin),
@@ -206,7 +338,6 @@ class _SettingsState extends State<Settings> implements Disposable {
                       'Move files with identical titles, but different extensions when moving a file (Sorting "My Neighbor Totoro.mkv" would also move/copy "My Neighbor Totoro.ass" to where the video file goes)'),
                   onChanged: (value) => {},
                 ),
-
                 const Divider(),
                 Container(
                     alignment: Alignment.centerLeft,
@@ -255,7 +386,6 @@ class _SettingsState extends State<Settings> implements Disposable {
                     onChanged: (value) => _queueSave(() {
                           _settings.destination.fragmentSeries = value!;
                         })),
-
                 const Divider(),
                 Container(
                     alignment: Alignment.centerLeft,
@@ -284,23 +414,20 @@ class _SettingsState extends State<Settings> implements Disposable {
                         DataColumn(label: Text('Sample Path')),
                       ],
                       rows: [
-                        DataRow(
-                          cells: [
-                            const DataCell(Text('TV')),
-                            DataCell(buildRichTextTvPathFromFormat(context, _settings.destination.path, _settings.destination.tvPath, _settings.destination.format))
-                          ]
-                        ),
-                        DataRow(
-                          cells: [
-                            const DataCell(Text('Movie')),
-                            DataCell(buildRichTextMoviePathFromFormat(context, _settings.destination.path, _settings.destination.moviePath, _settings.destination.format)),
-                          ]
-                        ),
+                        DataRow(cells: [
+                          const DataCell(Text('TV')),
+                          DataCell(
+                              buildRichTextTvPathFromFormat(context, _settings.destination.path, _settings.destination.tvPath, _settings.destination.format))
+                        ]),
+                        DataRow(cells: [
+                          const DataCell(Text('Movie')),
+                          DataCell(buildRichTextMoviePathFromFormat(
+                              context, _settings.destination.path, _settings.destination.moviePath, _settings.destination.format)),
+                        ]),
                       ],
                     ),
                   ),
                 ),
-
                 const Divider(),
                 Container(
                     alignment: Alignment.centerLeft,

@@ -24,7 +24,7 @@ class _RemoteFilePickerState extends State<RemoteFilePicker> {
 
   final _pathSegments = Queue<String>();
 
-  LocalFileServiceClient _localFileClient;
+  final LocalFileServiceClient _localFileClient;
   final _pathRequestStream = StreamController<DirectoryFilesRequest>.broadcast();
 
   ResponseStream<DirectoryFilesReply>? _currentDirectoryFilesStream;
@@ -75,6 +75,10 @@ class _RemoteFilePickerState extends State<RemoteFilePicker> {
               _path = snapshot.data!.currentPath;
             }
 
+            final paths = snapshot.hasData
+                ? snapshot.data!.files.where((p) => widget.type != DirectoryFilesReply_DirectoryFileType.Directory || widget.type == p.type).toList()
+                : List.empty();
+
             return ConstrainedBox(
               constraints: const BoxConstraints.expand(width: 768),
               child: Row(
@@ -119,7 +123,10 @@ class _RemoteFilePickerState extends State<RemoteFilePicker> {
                           IconButton(
                             icon: const Icon(Icons.keyboard_return),
                             onPressed: () => _moveUp(),
-                          )
+                          ),
+                          widget.type == DirectoryFilesReply_DirectoryFileType.Directory
+                              ? ElevatedButton(onPressed: () => Navigator.pop(context, _path), child: const Text('Select'))
+                              : const SizedBox.shrink(),
                         ],
                       ),
                       Expanded(
@@ -127,10 +134,10 @@ class _RemoteFilePickerState extends State<RemoteFilePicker> {
                             ? ListView.builder(
                                 controller: ScrollController(),
                                 shrinkWrap: true,
-                                itemCount: snapshot.data!.files.length,
+                                itemCount: paths.length,
                                 itemBuilder: (context, index) => _DirectoryContentsItem(
                                       selectorType: widget.type,
-                                      directoryFile: snapshot.data!.files[index],
+                                      directoryFile: paths[index],
                                       onPathChanged: (value) => _setPath(value),
                                       onFileSelected: (value) => Navigator.pop(context, value),
                                     ))

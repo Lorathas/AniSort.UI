@@ -3,10 +3,10 @@ import 'package:anisort_ui/widgets/tappable_item.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anisort_ui/pages/anime/list.dart';
-import 'package:anisort_ui/pages/files/list.dart';
+import 'package:anisort_ui/pages/files/files_page.dart';
 import 'package:anisort_ui/pages/jobs/queue.dart';
 import 'package:anisort_ui/pages/scheduled_jobs/list.dart';
-import 'package:anisort_ui/pages/settings.dart';
+import 'package:anisort_ui/pages/settings_page.dart';
 import 'package:anisort_ui/theme/swatches.dart';
 
 class _NavigationItem {
