@@ -1,9 +1,10 @@
 import 'package:anisort_ui/exceptions/invalid_format_path_exception.dart';
-import 'package:anisort_ui/paths/const_file_format_emitter.dart';
+import 'package:anisort_ui/paths/const_path_format_emitter.dart';
 import 'package:anisort_ui/paths/path_builder.dart';
-import 'package:anisort_ui/paths/variable_format_emitter.dart';
+import 'package:anisort_ui/paths/variable_path_format_emitter.dart';
+import 'package:flutter/material.dart';
 
-import 'file_format_emitter.dart';
+import 'path_format_emitter.dart';
 
 final sampleTvInfo = {
   "animeEnglish":"Ghost in the Shell: Stand Alone Complex",
@@ -58,9 +59,13 @@ enum _FileFormatParseMode {
 }
 
 buildEmittersForFormat(String format) {
+  if (format.isEmpty) {
+    return <PathFormatEmitter>[];
+  }
+
   var mode = _FileFormatParseMode.constant;
 
-  final emitters = List<FileFormatEmitter>.empty(growable: true);
+  final emitters = List<PathFormatEmitter>.empty(growable: true);
 
   bool ellipsize = false;
   var ellipsizeBuffer = StringBuffer(3);
@@ -81,7 +86,9 @@ buildEmittersForFormat(String format) {
       case _FileFormatParseMode.constant:
         if (c == '{')
         {
-          emitters.add(ConstFileFormatEmitter(buffer.toString()));
+          if (buffer.length > 0) {
+            emitters.add(ConstPathFormatEmitter(buffer.toString()));
+          }
           buffer.clear();
           mode = _FileFormatParseMode.variableStart;
         }
@@ -120,7 +127,7 @@ buildEmittersForFormat(String format) {
           }
           ellipsizeBuffer.clear();
 
-          emitters.add(VariableFormatEmitter(variableName, prefix, suffix, ellipsize));
+          emitters.add(VariablePathFormatEmitter(variableName, prefix, suffix, ellipsize));
           ellipsize = false;
         }
         else if (c == '{' || c == '}')
@@ -164,7 +171,7 @@ buildEmittersForFormat(String format) {
           }
           ellipsizeBuffer.clear();
 
-          emitters.add(VariableFormatEmitter(variableName, prefix, suffix, ellipsize));
+          emitters.add(VariablePathFormatEmitter(variableName, prefix, suffix, ellipsize));
           ellipsize = false;
         }
         else if (c == '.' && ellipsizeBuffer.length < 3)
@@ -206,7 +213,7 @@ buildEmittersForFormat(String format) {
 
   if (mode == _FileFormatParseMode.constant && buffer.length > 0)
   {
-    emitters.add(ConstFileFormatEmitter(buffer.toString()));
+    emitters.add(ConstPathFormatEmitter(buffer.toString()));
   }
 
   return emitters;
@@ -214,4 +221,8 @@ buildEmittersForFormat(String format) {
 
 buildSampleTvPathFromFormat(String rootPath, String tvPath, String format) => PathBuilder.fromFormat(rootPath, tvPath, '', format).build(sampleTvInfo, ShowType.tv);
 
+buildRichTextTvPathFromFormat(BuildContext context, String rootPath, String tvPath, String format) => PathBuilder.fromFormat(rootPath, tvPath, '', format).buildRichText(context, sampleTvInfo, ShowType.tv);
+
 buildSampleMoviePathFromFormat(String rootPath, String moviePath, String format) => PathBuilder.fromFormat(rootPath, '', moviePath, format).build(sampleTvInfo, ShowType.movie);
+
+buildRichTextMoviePathFromFormat(BuildContext context, String rootPath, String moviePath, String format) => PathBuilder.fromFormat(rootPath, '', moviePath, format).buildRichText(context, sampleMovieInfo, ShowType.movie);

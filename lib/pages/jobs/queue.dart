@@ -12,7 +12,14 @@ class JobQueuePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: const Text('Job Queue')),
         body: Row(
-          children: [const SizedBox(width: 192, child: NavigationPane(currentPage: AniSortPage.jobQueue)), Expanded(child: JobQueue())],
+          children: [
+            const IntrinsicWidth(child: NavigationPane()),
+            Expanded(
+                child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: JobQueue(),
+            ))
+          ],
         ));
   }
 }

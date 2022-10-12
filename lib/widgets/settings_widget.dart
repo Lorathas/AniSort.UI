@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:anisort_ui/paths/path_format_utils.dart';
 import 'package:anisort_ui/proto/generated/settings.pb.dart';
 import 'package:anisort_ui/service/settings_service.dart';
 import 'package:flutter/material.dart';
@@ -55,19 +56,35 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
           _settings.mergeFromMessage(updated);
 
           _updateControllerTextFromSettings();
-    }));
+        }));
   }
 
   _updateControllerTextFromSettings() {
-    _rootPathController.text = _settings.destination.path;
-    _tvPathController.text = _settings.destination.tvPath;
-    _moviePathController.text = _settings.destination.moviePath;
-    _formatController.text = _settings.destination.format;
+    if (_rootPathController.text != _settings.destination.path) {
+      _rootPathController.text = _settings.destination.path;
+    }
+    if (_tvPathController.text != _settings.destination.tvPath) {
+      _tvPathController.text = _settings.destination.tvPath;
+    }
+    if (_moviePathController.text != _settings.destination.moviePath) {
+      _moviePathController.text = _settings.destination.moviePath;
+    }
+    if (_formatController.text != _settings.destination.format) {
+      _formatController.text = _settings.destination.format;
+    }
 
-    _usernameController.text = _settings.aniDb.username;
-    _passwordController.text = _settings.aniDb.password;
-    _maxFileRetriesController.text = _settings.aniDb.maxFileSearchRetries.toString();
-    _fileSearchCooldownController.text = _settings.aniDb.fileSearchCooldownMinutes.toString();
+    if (_usernameController.text != _settings.aniDb.username) {
+      _usernameController.text = _settings.aniDb.username;
+    }
+    if (_passwordController.text != _settings.aniDb.password) {
+      _passwordController.text = _settings.aniDb.password;
+    }
+    if (_maxFileRetriesController.text != _settings.aniDb.maxFileSearchRetries.toString()) {
+      _maxFileRetriesController.text = _settings.aniDb.maxFileSearchRetries.toString();
+    }
+    if (_fileSearchCooldownController.text != _settings.aniDb.fileSearchCooldownMinutes.toString()) {
+      _fileSearchCooldownController.text = _settings.aniDb.fileSearchCooldownMinutes.toString();
+    }
   }
 
   _queueSave(Function()? mutator) {
@@ -149,48 +166,48 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                       'Import',
                       style: TextStyle(fontSize: _headerFontSize),
                     )),
-                CheckboxListTile(
+                SwitchListTile(
                   title: const Text('Debug'),
-                  subtitle: const Text('Prevent the the program from making irreparable operations such as moving files or database changes that don\'t include settings'),
+                  subtitle: const Text(
+                      'Prevent the the program from making irreparable operations such as moving files or database changes that don\'t include settings'),
                   value: _settings.debug,
-                  onChanged: (value) =>
-                      _queueSave(() {
-                        _settings.debug = value!;
-                      }),
+                  onChanged: (value) => _queueSave(() {
+                    _settings.debug = value;
+                  }),
                 ),
-                CheckboxListTile(
+                SwitchListTile(
                   title: const Text('Verbose'),
                   subtitle: const Text('Enable verbose logging to track more information'),
                   value: _settings.verbose,
-                  onChanged: (value) =>
-                      _queueSave(() {
-                        _settings.verbose = value!;
-                      }),
+                  onChanged: (value) => _queueSave(() {
+                    _settings.verbose = value;
+                  }),
                 ),
-                CheckboxListTile(
+                SwitchListTile(
                   title: const Text('Copy'),
                   subtitle: const Text('When sorting files from import directories it, copy the file instead of moving it'),
                   value: _settings.copy,
-                  onChanged: (value) =>
-                      _queueSave(() {
-                        _settings.copy = value!;
-                      }),
+                  onChanged: (value) => _queueSave(() {
+                    _settings.copy = value;
+                  }),
                 ),
-                CheckboxListTile(
+                SwitchListTile(
                   title: const Text('Incremental Cleanup'),
                   value: _settings.incrementalCleanup,
-                  onChanged: (value) =>
-                      _queueSave(() {
-                        _settings.incrementalCleanup = value!;
-                      }),
+                  onChanged: (value) => _queueSave(() {
+                    _settings.incrementalCleanup = value;
+                  }),
                 ),
                 CheckboxListTile(
                   title: const Text('Move Related Files'),
                   value: false,
                   enabled: false,
-                  subtitle: const Text('Move files with identical titles, but different extensions when moving a file (Sorting "My Neighbor Totoro.mkv" would also move/copy "My Neighbor Totoro.ass" to where the video file goes)'),
+                  subtitle: const Text(
+                      'Move files with identical titles, but different extensions when moving a file (Sorting "My Neighbor Totoro.mkv" would also move/copy "My Neighbor Totoro.ass" to where the video file goes)'),
                   onChanged: (value) => {},
                 ),
+
+                const Divider(),
                 Container(
                     alignment: Alignment.centerLeft,
                     margin: _headerMargin,
@@ -204,10 +221,9 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                     decoration: const InputDecoration(labelText: 'Root Path'),
                     controller: _rootPathController,
                     validator: _requiredStringValidator('Root Path'),
-                    onChanged: (value) =>
-                        _queueSave(() {
-                          _settings.destination.path = value;
-                        }),
+                    onChanged: (value) => _queueSave(() {
+                      _settings.destination.path = value;
+                    }),
                   ),
                 ),
                 Container(
@@ -216,10 +232,9 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                     decoration: const InputDecoration(labelText: 'TV Path'),
                     controller: _tvPathController,
                     validator: _requiredStringValidator('TV Path'),
-                    onChanged: (value) =>
-                        _queueSave(() {
-                          _settings.destination.tvPath = value;
-                        }),
+                    onChanged: (value) => _queueSave(() {
+                      _settings.destination.tvPath = value;
+                    }),
                   ),
                 ),
                 Container(
@@ -228,20 +243,27 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                     decoration: const InputDecoration(labelText: 'Movie Path'),
                     controller: _moviePathController,
                     validator: _requiredStringValidator('Movie Path'),
-                    onChanged: (value) =>
-                        _queueSave(() {
-                          _settings.destination.moviePath = value;
-                        }),
+                    onChanged: (value) => _queueSave(() {
+                      _settings.destination.moviePath = value;
+                    }),
                   ),
                 ),
                 CheckboxListTile(
                     title: const Text('Fragment Series'),
                     value: _settings.destination.fragmentSeries,
                     subtitle: const Text('Move files to root path instead of library path with existing files for the series'),
-                    onChanged: (value) =>
-                        _queueSave(() {
+                    onChanged: (value) => _queueSave(() {
                           _settings.destination.fragmentSeries = value!;
                         })),
+
+                const Divider(),
+                Container(
+                    alignment: Alignment.centerLeft,
+                    margin: _headerMargin,
+                    child: const Text(
+                      'Filename Formatting',
+                      style: TextStyle(fontSize: _headerFontSize),
+                    )),
                 Container(
                   margin: _textFieldMargin,
                   child: TextFormField(
@@ -253,6 +275,33 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                     }),
                   ),
                 ),
+                LayoutBuilder(
+                  builder: (context, constraints) => ConstrainedBox(
+                    constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                    child: DataTable(
+                      columns: const [
+                        DataColumn(label: Text('Sample Type')),
+                        DataColumn(label: Text('Sample Path')),
+                      ],
+                      rows: [
+                        DataRow(
+                          cells: [
+                            const DataCell(Text('TV')),
+                            DataCell(buildRichTextTvPathFromFormat(context, _settings.destination.path, _settings.destination.tvPath, _settings.destination.format))
+                          ]
+                        ),
+                        DataRow(
+                          cells: [
+                            const DataCell(Text('Movie')),
+                            DataCell(buildRichTextMoviePathFromFormat(context, _settings.destination.path, _settings.destination.moviePath, _settings.destination.format)),
+                          ]
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                const Divider(),
                 Container(
                     alignment: Alignment.centerLeft,
                     margin: _headerMargin,
@@ -266,10 +315,9 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                     decoration: const InputDecoration(labelText: 'Username'),
                     controller: _usernameController,
                     validator: _requiredStringValidator('Username'),
-                    onChanged: (value) =>
-                        _queueSave(() {
-                          _settings.aniDb.username = value;
-                        }),
+                    onChanged: (value) => _queueSave(() {
+                      _settings.aniDb.username = value;
+                    }),
                   ),
                 ),
                 Container(
@@ -278,10 +326,9 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                     decoration: const InputDecoration(labelText: 'Password'),
                     controller: _passwordController,
                     validator: _requiredStringValidator('Password'),
-                    onChanged: (value) =>
-                        _queueSave(() {
-                          _settings.aniDb.password = value;
-                        }),
+                    onChanged: (value) => _queueSave(() {
+                      _settings.aniDb.password = value;
+                    }),
                   ),
                 ),
                 Container(
@@ -291,10 +338,9 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                     keyboardType: TextInputType.number,
                     controller: _maxFileRetriesController,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    onChanged: (value) =>
-                        _queueSave(() {
-                          _settings.aniDb.maxFileSearchRetries = int.parse(value);
-                        }),
+                    onChanged: (value) => _queueSave(() {
+                      _settings.aniDb.maxFileSearchRetries = int.parse(value);
+                    }),
                   ),
                 ),
                 Container(
@@ -304,10 +350,9 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                     keyboardType: TextInputType.number,
                     controller: _fileSearchCooldownController,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    onChanged: (value) =>
-                        _queueSave(() {
-                          _settings.aniDb.fileSearchCooldownMinutes = int.parse(value);
-                        }),
+                    onChanged: (value) => _queueSave(() {
+                      _settings.aniDb.fileSearchCooldownMinutes = int.parse(value);
+                    }),
                   ),
                 ),
                 Container(

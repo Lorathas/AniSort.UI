@@ -1,11 +1,12 @@
 import 'package:anisort_ui/exceptions/invalid_format_path_exception.dart';
-import 'package:anisort_ui/paths/file_format_emitter.dart';
+import 'package:anisort_ui/paths/const_path_format_emitter.dart';
+import 'package:anisort_ui/paths/path_format_emitter.dart';
 import 'package:anisort_ui/paths/path_format_utils.dart' show buildEmittersForFormat;
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 
 final _textColors = [
-  Colors.grey.shade900,
+  Colors.grey.shade100,
   Colors.grey.shade900,
   Colors.grey.shade900,
   Colors.grey.shade900,
@@ -68,7 +69,7 @@ class PathBuilder {
   final String rootPath;
   final String tvPath;
   final String moviePath;
-  final List<FileFormatEmitter> emitters;
+  final List<PathFormatEmitter> emitters;
 
   PathBuilder(this.rootPath, this.tvPath, this.moviePath, this.emitters);
 
@@ -79,23 +80,31 @@ class PathBuilder {
 
   buildRichText(BuildContext context, Map<String, String> variables, ShowType show) {
     final spans = <InlineSpan>[
-      TextSpan(text: rootPath),
-      TextSpan(text: p.separator),
-      show == ShowType.tv ? TextSpan(text: tvPath) : TextSpan(text: moviePath),
-      TextSpan(text: p.separator),
+      WidgetSpan(child: _PathSegmentChunk(text: p.join(rootPath,show == ShowType.tv ? tvPath : moviePath), backgroundColor: Theme.of(context).cardColor, isStart: true)),
     ];
 
+    var takenColors = 0;
     for (var idx = 0; idx < emitters.length; idx++) {
       final emitter = emitters[idx];
 
       try {
-        final text = emitter.emit(variables);
+        final emitted = emitter.emit(variables);
 
-        spans.add(WidgetSpan(
-            child: Container(
-                decoration: BoxDecoration(color: pathVariableBackgroundColor(idx), borderRadius: const BorderRadius.all(Radius.circular(2))),
-                padding: const EdgeInsets.all(2),
-                child: Text(emitter.emit(variables), style: TextStyle(color: pathVariableTextColor(idx))))));
+        final text = idx == emitters.length - 1 && emitter is ConstPathFormatEmitter
+          ? '$emitted.mkv'
+          : emitted;
+
+        if (emitter is ConstPathFormatEmitter) {
+          spans.add(WidgetSpan(child: _PathSegmentChunk(text: text, backgroundColor: Theme.of(context).cardColor)));
+        } else {
+          spans.add(WidgetSpan(
+              child: _PathSegmentChunk(
+            text: text,
+            color: pathVariableTextColor(takenColors),
+            backgroundColor: pathVariableBackgroundColor(takenColors),
+          )));
+          takenColors++;
+        }
       } on InvalidFormatPathException catch (ex) {
         spans.add(TextSpan(text: ex.message, style: TextStyle(color: Theme.of(context).errorColor, backgroundColor: Theme.of(context).cardColor)));
         break;
@@ -103,5 +112,41 @@ class PathBuilder {
     }
 
     return RichText(text: TextSpan(children: spans));
+  }
+}
+
+class _PathSegmentChunk extends StatelessWidget {
+  static const _radius = Radius.circular(4);
+
+  final String text;
+  final Color? color;
+  final Color? backgroundColor;
+  final bool isStart;
+  final bool isEnd;
+
+  const _PathSegmentChunk({required this.text, this.color, this.backgroundColor, this.isStart = false, this.isEnd = false});
+
+  get _borderRadius {
+    if (isStart && isEnd) {
+      return const BorderRadius.all(_radius);
+    } else if (isStart) {
+      return const BorderRadius.horizontal(left: _radius);
+    } else if (isEnd) {
+      return const BorderRadius.horizontal(right: _radius);
+    } else {
+      return const BorderRadius.all(Radius.zero);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+      decoration: BoxDecoration(borderRadius: _borderRadius, color: backgroundColor),
+      child: Text(
+        text,
+        style: TextStyle(color: color),
+      ),
+    );
   }
 }
