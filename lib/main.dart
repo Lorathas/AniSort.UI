@@ -1,7 +1,9 @@
 import 'package:anisort_ui/ioc.dart';
+import 'package:anisort_ui/pages/base_page.dart';
 import 'package:anisort_ui/pages/jobs/queue.dart';
 import 'package:anisort_ui/theme/swatches.dart';
 import 'package:anisort_ui/widgets/jobs/queue.dart';
+import 'package:anisort_ui/widgets/nav.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -31,14 +33,40 @@ class AniSort extends StatelessWidget {
         primarySwatch: slate,
         canvasColor: slate.shade50,
         backgroundColor: slate.shade400,
-        appBarTheme: AppBarTheme(backgroundColor: slate.shade900),
+        cardColor: slate.shade200,
+        primaryColor: slate.shade100,
+        unselectedWidgetColor: slate.shade500,
+        bottomAppBarTheme: BottomAppBarTheme(color: slate.shade800),
+        appBarTheme: AppBarTheme(backgroundColor: slate.shade800),
+        navigationRailTheme: NavigationRailThemeData(
+            backgroundColor: slate.shade800,
+            indicatorColor: slate.shade100,
+            selectedIconTheme: IconThemeData(
+              color: slate.shade100,
+            ),
+            unselectedIconTheme: IconThemeData(
+              color: slate.shade400,
+            )),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: slate,
         canvasColor: slate.shade900,
         backgroundColor: slate.shade700,
+        cardColor: slate.shade700,
+        primaryColor: slate.shade100,
+        unselectedWidgetColor: slate.shade500,
+        bottomAppBarTheme: BottomAppBarTheme(color: slate.shade800),
         appBarTheme: AppBarTheme(backgroundColor: slate.shade800),
+        navigationRailTheme: NavigationRailThemeData(
+            backgroundColor: slate.shade800,
+            indicatorColor: slate.shade100,
+            selectedIconTheme: IconThemeData(
+              color: slate.shade100,
+            ),
+            unselectedIconTheme: IconThemeData(
+              color: slate.shade400,
+            )),
       ),
       themeMode: ThemeMode.system,
       home: const AniSortHomePage(title: 'AniSort'),
@@ -67,12 +95,10 @@ class AniSortHomePage extends StatefulWidget {
 class _AniSortHomePageState extends State<AniSortHomePage> {
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return const JobQueuePage();
+    return BasePage(
+      selectedIndex: AniSortPage.jobQueue,
+      appBar: AppBar(title: const Text('AniSort')),
+      body: Padding(padding: const EdgeInsets.all(8.0), child: JobQueue()),
+    );
   }
 }

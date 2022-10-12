@@ -10,10 +10,10 @@ import 'package:injectable/injectable.dart';
 import '../ioc.dart';
 
 @injectable
-class SettingsWidget extends StatefulWidget {
+class Settings extends StatefulWidget {
   final SettingsService settingsService = getIt.get<SettingsService>();
 
-  SettingsWidget({super.key});
+  Settings({super.key});
 
   @override
   State<StatefulWidget> createState() => _SettingsState();
@@ -27,7 +27,7 @@ const double _headerVerticalMargin = 24;
 const _headerMargin = EdgeInsets.symmetric(horizontal: _headerHorizontalMargin, vertical: _headerVerticalMargin);
 const _textFieldMargin = EdgeInsets.symmetric(horizontal: _headerHorizontalMargin);
 
-class _SettingsState extends State<SettingsWidget> implements Disposable {
+class _SettingsState extends State<Settings> implements Disposable {
   late StreamSubscription<SettingsReply> updates;
 
   final _rootPathController = TextEditingController();

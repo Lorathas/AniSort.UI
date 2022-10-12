@@ -1,6 +1,9 @@
-import 'package:anisort_ui/models/anisort_page.dart';
+import 'package:anisort_ui/adaptive.dart';
+import 'package:anisort_ui/pages/base_page.dart';
 import 'package:anisort_ui/widgets/nav.dart';
+import 'package:anisort_ui/widgets/screen_type_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:anisort_ui/widgets/nav.dart';
 
 import '../../widgets/jobs/queue.dart';
 
@@ -9,17 +12,10 @@ class JobQueuePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: const Text('Job Queue')),
-        body: Row(
-          children: [
-            const IntrinsicWidth(child: NavigationPane()),
-            Expanded(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: JobQueue(),
-            ))
-          ],
-        ));
+    return BasePage(
+      selectedIndex: AniSortPage.jobQueue,
+      appBar: AppBar(title: const Text('Job Queue')),
+      body: Padding(padding: const EdgeInsets.all(8.0), child: JobQueue()),
+    );
   }
 }

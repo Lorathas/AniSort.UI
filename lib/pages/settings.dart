@@ -1,3 +1,5 @@
+import 'package:anisort_ui/pages/base_page.dart';
+import 'package:anisort_ui/widgets/nav.dart';
 import 'package:flutter/material.dart';
 
 import '../ioc.dart';
@@ -8,10 +10,9 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BasePage(
+        selectedIndex: AniSortPage.settings,
         appBar: AppBar(title: const Text('Settings')),
-      body: SettingsWidget(),
-    );
+        body: Padding(padding: const EdgeInsets.all(8.0), child: Settings()));
   }
-
 }

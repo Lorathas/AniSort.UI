@@ -36,7 +36,7 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
       () => appModule.scheduledJobServiceClient(get<_i3.ClientChannel>()));
   gh.factory<_i7.SettingsServiceClient>(
       () => appModule.settingsServiceClient(get<_i3.ClientChannel>()));
-  gh.factory<_i8.SettingsWidget>(() => _i8.SettingsWidget(key: get<_i9.Key>()));
+  gh.factory<_i8.Settings>(() => _i8.Settings(key: get<_i9.Key>()));
   gh.factory<_i10.AnimeServiceClient>(
       () => appModule.animeServiceClient(get<_i3.ClientChannel>()));
   gh.singleton<_i11.SettingsService>(
