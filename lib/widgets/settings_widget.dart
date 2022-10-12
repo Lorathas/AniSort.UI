@@ -355,13 +355,6 @@ class _SettingsState extends State<SettingsWidget> implements Disposable {
                     }),
                   ),
                 ),
-                Container(
-                  margin: _headerMargin,
-                  child: ElevatedButton(
-                    child: const Text('Save'),
-                    onPressed: () => {},
-                  ),
-                )
               ],
             )),
       ),
