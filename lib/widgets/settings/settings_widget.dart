@@ -4,14 +4,13 @@ import 'package:anisort_ui/paths/path_format_utils.dart';
 import 'package:anisort_ui/proto/generated/files.pb.dart';
 import 'package:anisort_ui/proto/generated/settings.pb.dart';
 import 'package:anisort_ui/service/settings_service.dart';
-import 'package:anisort_ui/service/theme_service.dart';
 import 'package:anisort_ui/widgets/settings/app_settings.dart';
+import 'package:anisort_ui/widgets/settings/multi_path_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import '../../ioc.dart';
-import '../files/file_picker.dart';
 
 const double _headerFontSize = 24;
 const double _headerTopMargin = 24;
@@ -29,128 +28,6 @@ _requiredStringValidator(String fieldName) {
 
     return null;
   };
-}
-
-Future<String?> _pickDirectoryPath(BuildContext context) async {
-  return showDialog<String?>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Choose File'),
-          content: const RemoteFilePicker(type: DirectoryFilesReply_DirectoryFileType.Directory),
-          actions: [
-            TextButton(
-              style: TextButton.styleFrom(textStyle: Theme.of(context).textTheme.labelLarge),
-              child: const Text('Cancel'),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        );
-      });
-}
-
-class _LibrarySettings extends StatefulWidget {
-  final List<String> paths;
-  final Function(List<String>) onPathsChanged;
-
-  const _LibrarySettings({super.key, required this.paths, required this.onPathsChanged});
-
-  @override
-  State<StatefulWidget> createState() => _LibrarySettingsState();
-}
-
-class _LibrarySettingsState extends State<_LibrarySettings> {
-  final List<String> _pendingPaths = List.empty(growable: true);
-
-  _removeRow(index) {
-    if (index > widget.paths.length + _pendingPaths.length || index < 0) {
-      return;
-    }
-
-    final allPaths = List<String>.from(widget.paths, growable: true);
-    allPaths.addAll(_pendingPaths);
-
-    allPaths.removeAt(index);
-
-    setState(() {
-      _pendingPaths.clear();
-    });
-    widget.onPathsChanged(allPaths);
-  }
-
-  _updatePath(index, value) {
-    if (value == null || index > widget.paths.length + _pendingPaths.length || index < 0) {
-      return;
-    }
-
-    final allPaths = List<String>.from(widget.paths, growable: true);
-    allPaths.addAll(_pendingPaths);
-
-    allPaths[index] = value;
-
-    setState(() {
-      _pendingPaths.clear();
-    });
-    widget.onPathsChanged(allPaths);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final rows = List<DataRow>.empty(growable: true);
-
-    for (var idx = 0; idx < widget.paths.length; idx++) {
-      final path = widget.paths[idx];
-
-      rows.add(DataRow(cells: [
-        DataCell(Text(path.isEmpty ? 'Path' : path), showEditIcon: true, placeholder: path.isEmpty, onTap: () async => _updatePath(idx, await _pickDirectoryPath(context))),
-        DataCell(IconButton(icon: const Icon(Icons.remove), onPressed: () => _removeRow(idx))),
-      ]));
-    }
-
-    for (var idx = 0; idx < _pendingPaths.length; idx++) {
-      final path = _pendingPaths[idx];
-
-      rows.add(
-        DataRow(cells: [
-          DataCell(Text(path.isEmpty ? 'Path' : path), showEditIcon: true, placeholder: path.isEmpty, onTap: () async => _updatePath(idx + widget.paths.length, await _pickDirectoryPath(context))),
-          DataCell(IconButton(icon: const Icon(Icons.remove), onPressed: () => _removeRow(idx)))
-        ]),
-      );
-    }
-
-    return Column(children: [
-      Row(
-        children: [
-          Expanded(
-            child: Container(
-                alignment: Alignment.centerLeft,
-                margin: const EdgeInsets.only(left: _headerHorizontalMargin),
-                child: const Text(
-                  'Library',
-                  style: TextStyle(fontSize: _headerFontSize),
-                )),
-          ),
-          IntrinsicWidth(
-              child: IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => setState(() {
-              _pendingPaths.add("");
-            }),
-          )),
-        ],
-      ),
-      LayoutBuilder(
-          builder: (context, constraints) => ConstrainedBox(
-              constraints: BoxConstraints(minWidth: constraints.maxWidth),
-              child: DataTable(
-                columns: const [
-                  DataColumn(label: Text('Library Path')),
-                  DataColumn(label: Text(''), numeric: true),
-                ],
-                rows: rows,
-              ))),
-    ]);
-  }
 }
 
 @injectable
@@ -190,6 +67,7 @@ class _SettingsState extends State<Settings> implements Disposable {
 
     updates = widget.settingsService.listenForSettingsChanges().listen((updated) => setState(() {
           _settings.libraryPaths.clear();
+          _settings.sources.clear();
           _settings.mergeFromMessage(updated);
 
           _updateControllerTextFromSettings();
@@ -288,12 +166,24 @@ class _SettingsState extends State<Settings> implements Disposable {
               children: [
                 AppSettings(),
                 const Divider(),
-                _LibrarySettings(
+                MultiPathPicker(
+                    title: 'Library',
+                    type: DirectoryFilesReply_DirectoryFileType.Directory,
                     paths: _settings.libraryPaths,
                     onPathsChanged: (paths) => _queueSave(() {
                           _settings.libraryPaths.clear();
                           _settings.libraryPaths.addAll(paths);
                         })),
+                const Divider(),
+                MultiPathPicker(
+                  title: 'Import Paths',
+                  type: DirectoryFilesReply_DirectoryFileType.Directory,
+                  paths: _settings.sources,
+                  onPathsChanged: (paths) => _queueSave(() {
+                    _settings.sources.clear();
+                    _settings.sources.addAll(paths);
+                  }),
+                ),
                 const Divider(),
                 Container(
                     alignment: Alignment.centerLeft,

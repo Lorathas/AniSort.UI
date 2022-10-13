@@ -12,10 +12,10 @@ class SettingsSectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        alignment: Alignment.centerLeft,
-        margin: const EdgeInsets.only(left: _headerHorizontalMargin),
-        child: const Text(
-          'Import',
-          style: TextStyle(fontSize: _headerFontSize),
-        ));
+      alignment: Alignment.centerLeft,
+      margin: const EdgeInsets.only(left: _headerHorizontalMargin),
+      child: Text(
+        title,
+        style: const TextStyle(fontSize: _headerFontSize),
+      ));
 }
