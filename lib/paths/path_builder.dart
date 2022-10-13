@@ -80,7 +80,9 @@ class PathBuilder {
 
   buildRichText(BuildContext context, Map<String, String> variables, ShowType show) {
     final spans = <InlineSpan>[
-      WidgetSpan(child: _PathSegmentChunk(text: p.join(rootPath,show == ShowType.tv ? tvPath : moviePath), backgroundColor: Theme.of(context).cardColor, isStart: true)),
+      WidgetSpan(
+          child:
+              _PathSegmentChunk(text: p.join(rootPath, show == ShowType.tv ? tvPath : moviePath), backgroundColor: Theme.of(context).cardColor, isStart: true)),
     ];
 
     var takenColors = 0;
@@ -90,18 +92,19 @@ class PathBuilder {
       try {
         final emitted = emitter.emit(variables);
 
-        final text = idx == emitters.length - 1 && emitter is ConstPathFormatEmitter
-          ? '$emitted.mkv'
-          : emitted;
+        final isLast = idx == emitters.length - 1;
+
+        final text = isLast && emitter is ConstPathFormatEmitter ? '$emitted.mkv' : emitted;
 
         if (emitter is ConstPathFormatEmitter) {
-          spans.add(WidgetSpan(child: _PathSegmentChunk(text: text, backgroundColor: Theme.of(context).cardColor)));
+          spans.add(WidgetSpan(child: _PathSegmentChunk(text: text, backgroundColor: Theme.of(context).cardColor, isEnd: isLast)));
         } else {
           spans.add(WidgetSpan(
               child: _PathSegmentChunk(
             text: text,
             color: pathVariableTextColor(takenColors),
             backgroundColor: pathVariableBackgroundColor(takenColors),
+            isEnd: isLast,
           )));
           takenColors++;
         }

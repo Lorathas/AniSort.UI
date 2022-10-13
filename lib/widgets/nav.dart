@@ -1,5 +1,3 @@
-import 'package:anisort_ui/widgets/jobs/queue.dart';
-import 'package:anisort_ui/widgets/tappable_item.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anisort_ui/pages/anime/list.dart';

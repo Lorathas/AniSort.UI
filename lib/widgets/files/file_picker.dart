@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:collection';
 
 import 'package:anisort_ui/ioc.dart';
 import 'package:anisort_ui/proto/generated/files.pbgrpc.dart';
-import 'package:anisort_ui/proto/generated/google/protobuf/empty.pb.dart';
 import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart';
 import 'package:path/path.dart' as p;
@@ -22,18 +20,12 @@ class RemoteFilePicker extends StatefulWidget {
 class _RemoteFilePickerState extends State<RemoteFilePicker> {
   _RemoteFilePickerState({localFileClient}) : _localFileClient = localFileClient ?? getIt.get<LocalFileServiceClient>();
 
-  final _pathSegments = Queue<String>();
-
   final LocalFileServiceClient _localFileClient;
   final _pathRequestStream = StreamController<DirectoryFilesRequest>.broadcast();
 
   ResponseStream<DirectoryFilesReply>? _currentDirectoryFilesStream;
 
   get _directoryFilesStream => _currentDirectoryFilesStream ??= _localFileClient.getFilesInDirectory(_pathRequestStream.stream);
-
-  Future<DrivesReply> _loadAvailableDrives() {
-    return _localFileClient.getDrives(Empty());
-  }
 
   String _path = "";
 

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 const double _headerFontSize = 24;
-const double _headerTopMargin = 24;
 const double _headerHorizontalMargin = 16;
-const double _headerVerticalMargin = 24;
 
 class SettingsSectionHeader extends StatelessWidget {
   final String title;

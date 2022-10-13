@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../proto/generated/common.pbenum.dart';
 import '../../proto/generated/jobs.pbenum.dart';
 
 class JobFilter extends StatelessWidget {

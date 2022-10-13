@@ -13,7 +13,6 @@ import 'package:injectable/injectable.dart';
 import '../../ioc.dart';
 
 const double _headerFontSize = 24;
-const double _headerTopMargin = 24;
 const double _headerHorizontalMargin = 16;
 const double _headerVerticalMargin = 24;
 

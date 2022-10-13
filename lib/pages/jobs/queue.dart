@@ -1,9 +1,6 @@
-import 'package:anisort_ui/adaptive.dart';
 import 'package:anisort_ui/pages/base_page.dart';
 import 'package:anisort_ui/widgets/nav.dart';
-import 'package:anisort_ui/widgets/screen_type_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:anisort_ui/widgets/nav.dart';
 
 import '../../widgets/jobs/queue.dart';
 

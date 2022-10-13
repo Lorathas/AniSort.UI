@@ -2,7 +2,6 @@ import 'package:anisort_ui/pages/base_page.dart';
 import 'package:anisort_ui/widgets/nav.dart';
 import 'package:flutter/material.dart';
 
-import '../ioc.dart';
 import '../widgets/settings/settings_widget.dart';
 
 class SettingsPage extends StatelessWidget {

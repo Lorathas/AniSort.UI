@@ -2,7 +2,6 @@ import 'package:anisort_ui/proto/generated/jobs.pb.dart';
 import 'package:anisort_ui/widgets/tappable_item.dart';
 import 'package:flutter/material.dart';
 
-import '../../theme/swatches.dart';
 import '../../pages/jobs/details.dart';
 
 Color _statusColor(JobStatus status) {
@@ -16,10 +15,6 @@ Color _statusColor(JobStatus status) {
     default:
       return Colors.grey.shade500;
   }
-}
-
-Color? _backgroundColor(JobReply job, JobStep step) {
-  return null;
 }
 
 double? _jobPercent(JobStatus status, double percentComplete) {
