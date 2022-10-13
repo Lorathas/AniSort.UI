@@ -15,7 +15,7 @@ class AppSettings extends StatelessWidget {
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: StreamBuilder(
-            stream: themeService.stream,
+            stream: useTheme(),
             builder: (context, snapshot) => DropdownButtonFormField<ThemeMode>(
                 decoration: const InputDecoration(label: Text('Theme')),
                 value: snapshot.data ?? ThemeMode.system,
@@ -25,7 +25,7 @@ class AppSettings extends StatelessWidget {
                           child: Text(i.name.capitalize()),
                         ))
                     .toList(),
-                onChanged: (themeMode) async => await themeService.changeTheme(themeMode!)),
+                onChanged: (themeMode) async => await mutateTheme(themeMode!)),
           ),
         )
       ]);

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:anisort_ui/ioc.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,3 +53,7 @@ class ThemeService {
     return controller.stream;
   }
 }
+
+Stream<ThemeMode> useTheme() => getIt.get<ThemeService>().stream;
+
+mutateTheme(ThemeMode themeMode) => getIt.get<ThemeService>().changeTheme(themeMode);
