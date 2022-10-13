@@ -1,81 +1,90 @@
+import 'dart:async';
+
 import 'package:anisort_ui/ioc.dart';
 import 'package:anisort_ui/pages/base_page.dart';
 import 'package:anisort_ui/pages/jobs/queue.dart';
+import 'package:anisort_ui/service/theme_service.dart';
 import 'package:anisort_ui/theme/swatches.dart';
 import 'package:anisort_ui/widgets/jobs/queue.dart';
 import 'package:anisort_ui/widgets/nav.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   configureDependencies();
-  runApp(const AniSort());
+  runApp(AniSort());
 }
 
 class AniSort extends StatelessWidget {
-  const AniSort({Key? key}) : super(key: key);
+  final themeService = getIt.get<ThemeService>();
+
+  AniSort({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        brightness: Brightness.light,
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: slate,
-        canvasColor: slate.shade50,
-        backgroundColor: slate.shade400,
-        cardColor: slate.shade200,
-        primaryColor: slate.shade100,
-        unselectedWidgetColor: slate.shade500,
-        bottomAppBarTheme: BottomAppBarTheme(color: slate.shade800),
-        appBarTheme: AppBarTheme(backgroundColor: slate.shade800),
-        dialogTheme: DialogTheme(
-          backgroundColor: slate.shade200,
+    return StreamBuilder(
+      stream: themeService.stream,
+      builder: (context, snapshot) => MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          brightness: Brightness.light,
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: slate,
+          canvasColor: slate.shade50,
+          backgroundColor: slate.shade400,
+          cardColor: slate.shade200,
+          primaryColor: slate.shade100,
+          unselectedWidgetColor: slate.shade500,
+          bottomAppBarTheme: BottomAppBarTheme(color: slate.shade800),
+          appBarTheme: AppBarTheme(backgroundColor: slate.shade800),
+          dialogTheme: DialogTheme(
+            backgroundColor: slate.shade200,
+          ),
+          navigationRailTheme: NavigationRailThemeData(
+              backgroundColor: slate.shade800,
+              indicatorColor: slate.shade100,
+              selectedIconTheme: IconThemeData(
+                color: slate.shade100,
+              ),
+              unselectedIconTheme: IconThemeData(
+                color: slate.shade400,
+              )),
         ),
-        navigationRailTheme: NavigationRailThemeData(
-            backgroundColor: slate.shade800,
-            indicatorColor: slate.shade100,
-            selectedIconTheme: IconThemeData(
-              color: slate.shade100,
-            ),
-            unselectedIconTheme: IconThemeData(
-              color: slate.shade400,
-            )),
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        primarySwatch: slate,
-        canvasColor: slate.shade900,
-        backgroundColor: slate.shade700,
-        cardColor: slate.shade700,
-        primaryColor: slate.shade100,
-        unselectedWidgetColor: slate.shade500,
-        bottomAppBarTheme: BottomAppBarTheme(color: slate.shade800),
-        appBarTheme: AppBarTheme(backgroundColor: slate.shade800),
-        dialogTheme: DialogTheme(
-          backgroundColor: slate.shade900,
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          primarySwatch: slate,
+          canvasColor: slate.shade900,
+          backgroundColor: slate.shade700,
+          cardColor: slate.shade700,
+          primaryColor: slate.shade100,
+          unselectedWidgetColor: slate.shade500,
+          bottomAppBarTheme: BottomAppBarTheme(color: slate.shade800),
+          appBarTheme: AppBarTheme(backgroundColor: slate.shade800),
+          dialogTheme: DialogTheme(
+            backgroundColor: slate.shade900,
+          ),
+          navigationRailTheme: NavigationRailThemeData(
+              backgroundColor: slate.shade800,
+              indicatorColor: slate.shade100,
+              selectedIconTheme: IconThemeData(
+                color: slate.shade100,
+              ),
+              unselectedIconTheme: IconThemeData(
+                color: slate.shade400,
+              )),
         ),
-        navigationRailTheme: NavigationRailThemeData(
-            backgroundColor: slate.shade800,
-            indicatorColor: slate.shade100,
-            selectedIconTheme: IconThemeData(
-              color: slate.shade100,
-            ),
-            unselectedIconTheme: IconThemeData(
-              color: slate.shade400,
-            )),
+        themeMode: snapshot.data ?? ThemeMode.system,
+        home: const AniSortHomePage(title: 'AniSort'),
       ),
-      themeMode: ThemeMode.system,
-      home: const AniSortHomePage(title: 'AniSort'),
     );
   }
 }
