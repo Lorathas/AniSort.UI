@@ -4,6 +4,7 @@ import 'package:anisort_ui/proto/generated/jobs.pbgrpc.dart';
 import 'package:anisort_ui/proto/generated/scheduled_jobs.pbgrpc.dart';
 import 'package:anisort_ui/proto/generated/settings.pbgrpc.dart';
 import 'package:anisort_ui/service/grpc_service.dart';
+import 'package:anisort_ui/service/theme_service.dart';
 import 'package:grpc/grpc.dart';
 import 'package:injectable/injectable.dart';
 

@@ -3,7 +3,7 @@ import 'package:anisort_ui/widgets/nav.dart';
 import 'package:flutter/material.dart';
 
 import '../ioc.dart';
-import '../widgets/settings_widget.dart';
+import '../widgets/settings/settings_widget.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);

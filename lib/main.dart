@@ -1,24 +1,21 @@
-import 'dart:async';
 
 import 'package:anisort_ui/ioc.dart';
 import 'package:anisort_ui/pages/base_page.dart';
-import 'package:anisort_ui/pages/jobs/queue.dart';
 import 'package:anisort_ui/service/theme_service.dart';
 import 'package:anisort_ui/theme/swatches.dart';
 import 'package:anisort_ui/widgets/jobs/queue.dart';
 import 'package:anisort_ui/widgets/nav.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  configureDependencies();
-  runApp(AniSort());
+Future<void> main() async {
+  await configureDependencies();
+  runApp(AniSort(themeService: getIt.get<ThemeService>()));
 }
 
 class AniSort extends StatelessWidget {
-  final themeService = getIt.get<ThemeService>();
+  final ThemeService themeService;
 
-  AniSort({Key? key}) : super(key: key);
+  const AniSort({Key? key, required this.themeService}) : super(key: key);
 
   // This widget is the root of your application.
   @override

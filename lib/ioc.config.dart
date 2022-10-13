@@ -18,7 +18,7 @@ import 'proto/generated/scheduled_jobs.pbgrpc.dart' as _i6;
 import 'proto/generated/settings.pbgrpc.dart' as _i9;
 import 'service/settings_service.dart' as _i12;
 import 'service/theme_service.dart' as _i10;
-import 'widgets/settings_widget.dart'
+import 'widgets/settings/settings_widget.dart'
     as _i7; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars

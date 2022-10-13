@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @singleton
+@injectable
 class ThemeService {
   final _streamController = StreamController<ThemeMode>();
   late Stream<ThemeMode> _broadcastStream;

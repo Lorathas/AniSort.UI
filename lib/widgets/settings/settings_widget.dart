@@ -4,12 +4,14 @@ import 'package:anisort_ui/paths/path_format_utils.dart';
 import 'package:anisort_ui/proto/generated/files.pb.dart';
 import 'package:anisort_ui/proto/generated/settings.pb.dart';
 import 'package:anisort_ui/service/settings_service.dart';
+import 'package:anisort_ui/service/theme_service.dart';
+import 'package:anisort_ui/widgets/settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-import '../ioc.dart';
-import 'files/file_picker.dart';
+import '../../ioc.dart';
+import '../files/file_picker.dart';
 
 const double _headerFontSize = 24;
 const double _headerTopMargin = 24;
@@ -284,6 +286,8 @@ class _SettingsState extends State<Settings> implements Disposable {
             key: _formKey,
             child: Column(
               children: [
+                AppSettings(),
+                const Divider(),
                 _LibrarySettings(
                     paths: _settings.libraryPaths,
                     onPathsChanged: (paths) => _queueSave(() {
